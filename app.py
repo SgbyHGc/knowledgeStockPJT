@@ -20,6 +20,7 @@ def search_keyword_in_div(url, keyword):
     url: The URL of the webpage to search.
     keyword: The keyword to search for.
   """
+  results = []
   try:
     response = requests.get(url)
     response.raise_for_status()
@@ -34,13 +35,14 @@ def search_keyword_in_div(url, keyword):
           class_name = " ".join(class_name)  # Convert list of class names to a string
         else:
           class_name = "None"  # If no class attribute is found, display "None"
-        st.write(f"class: {class_name}")
-        st.write(f"text: {text[:100]}...\n")
+        results.append((class_name, text[:100]))
 
   except requests.exceptions.RequestException as e:
     st.write(f"Error fetching URL: {e}")
   except Exception as e:
     st.write(f"An error occurred: {e}")
+
+  return results
 
 
 # Streamlitアプリのタイトルを設定
