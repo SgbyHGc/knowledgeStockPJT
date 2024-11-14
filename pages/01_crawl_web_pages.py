@@ -118,7 +118,7 @@ if st.button("search"):
 
   txt = urls_to_txt(urls)
   st.download_button(
-    label="urls.txt",
+    label="Download .txt file",
     data=txt,
     file_name="urls.txt",
     mime="text/plain",
