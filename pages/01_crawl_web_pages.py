@@ -103,7 +103,7 @@ url_pattern = st.text_input('サブディレクトリを入力してください
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
 # 検索ボタン
-if st.button("search"):
+if st.button("Search"):
   # クロール処理
   with st.spinner('Crawling... This may take minutes'):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
@@ -113,15 +113,16 @@ if st.button("search"):
   if urls:
     for url in urls:
       st.write(url)
+    txt_file = urls_to_txt(urls)
+    st.download_button(
+      label="Download",
+      data=txt_file,
+      file_name="download.txt",
+      mime="text/plain",
+      )
   else:
     st.write('一致するURLは見つかりませんでした。')
 
-  txt = urls_to_txt(urls)
-  st.download_button(
-    label="Download .txt file",
-    data=txt,
-    file_name="urls.txt",
-    mime="text/plain",
-    )
+
 
     
