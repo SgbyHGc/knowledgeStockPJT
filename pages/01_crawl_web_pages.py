@@ -80,13 +80,15 @@ def crawl_web_pages(url, pattern, max_depth=2):
   crawl(url, 1)
   return urls
 
-def urls_to_txt(urls, filename="url_list.txt"):
+def urls_to_txt(urls, filename='urls.txt'):
   try:
     with open(filename, 'w', encoding='utf-8') as f:
       for url in urls:
         f.write(url + '\n')
+    return filename
   except Exception as e:
-    print(f'An error occurred: {e}')
+    print(f'Error: {e}')
+    return None
 
 # Streamlitアプリのタイトルを設定
 st.title("URL検索 🔎")
@@ -114,9 +116,10 @@ if st.button("search"):
   else:
     st.write('一致するURLは見つかりませんでした。')
 
+  txt = urls_to_txt(urls)
   st.download_button(
-    label="Download .txt",
-    data=urls,
+    label="urls.txt",
+    data=txt,
     file_name="urls.txt",
     mime="text/plain",
     )
