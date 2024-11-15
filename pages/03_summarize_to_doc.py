@@ -122,7 +122,7 @@ api_key = st.text_input("GeminiのAPI Keyを入力してください")
 summarized_text = []
 
 # 検索ボタン
-if st.button("Search"):
+if st.button("Summarize"):
   if uploaded_file is not None and class_name:
     urls = url_list_from_txt(uploaded_file)
     for url in urls:
