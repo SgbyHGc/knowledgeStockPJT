@@ -128,7 +128,7 @@ if st.button("Search"):
     for url in urls:
       extracted_text = get_text_by_class(url,class_name)
       title = get_title_from_url(url)
-      summary = gemini(extracted_text)
+      summary = gemini(extracted_text,api_key)
       st.write(summary)
   else:
     st.warning("フォームを全て入力してください")
