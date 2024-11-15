@@ -57,7 +57,7 @@ url = st.text_input("URLを入力してください")
 keyword = st.text_input("キーワードを入力してください")
 
 # 検索ボタン
-if st.button("search"):
+if st.button("Search"):
     if url and keyword:
         # キーワード検索を実行
         results = search_keyword_in_div(url, keyword)
