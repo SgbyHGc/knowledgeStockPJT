@@ -109,7 +109,7 @@ def gemini(extracted_text, api_key):
   return response.text
 
 # Streamlitアプリのタイトルを設定
-st.title("NotebookLM用データソースの出力")
+st.title("データソースの出力")
 
 st.markdown('---')
 st.markdown('要約を生成したいページのURLが入ったtxtファイルをアップロードしてください。個々のURLは改行で区切られている必要がありますpage-content--detail')
