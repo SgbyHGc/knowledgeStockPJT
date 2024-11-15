@@ -34,7 +34,7 @@ def get_text_by_class(url, class_name):
 st.title("NotebookLM用データソースの出力")
 
 st.markdown('---')
-st.markdown('要約を生成したいページのURLが入ったtxtファイルをアップロードしてください。個々のURLは改行で区切られている必要があります')
+st.markdown('要約を生成したいページのURLが入ったtxtファイルをアップロードしてください。個々のURLは改行で区切られている必要がありますpage-content--detail')
 st.markdown('---')
 
 # URLとキーワードの入力
