@@ -119,7 +119,7 @@ st.markdown('---')
 uploaded_file = st.file_uploader("txtファイルを選択してください", type='txt')
 class_name = st.text_input("URLのページに共通する、抽出したい部分のclass nameを指定してください")
 api_key = st.text_input("GeminiのAPI Keyを入力してください")
-
+summarized_text = []
 
 # 検索ボタン
 if st.button("Search"):
@@ -129,6 +129,14 @@ if st.button("Search"):
       extracted_text = get_text_by_class(url,class_name)
       title = get_title_from_url(url)
       summary = gemini(extracted_text,api_key)
+      summarized_text.append(summary)
       st.write(summary)
+    txt_data = "\n".join(summarized_text)
+    st.download_button(
+      label="Download",
+      data=txt_data,
+      file_name="summarized.txt",
+      mime="text/plain",
+      )
   else:
     st.warning("フォームを全て入力してください")
