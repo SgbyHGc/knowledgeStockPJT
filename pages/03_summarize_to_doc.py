@@ -2,13 +2,12 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 
-def url_list_from_txt(file_path):
+def url_list_from_txt(uploaded_file):
   try:
-    with open(file_path, 'r') as f:
-      urls = [line.strip() for line in f]
+    urls = uploaded_file.getvalue().decode('utf-8').splitlines()
     return urls
-  except FileNotFoundError:
-    print(f"エラー: ファイルが見つかりません ({file_path})")
+  except UnicodeDecodeError:
+    st.error("エラー: ファイルの文字コードがUTF-8ではありません。")
     return []
   
 def get_text_by_class(url, class_name):
