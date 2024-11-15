@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import re
 from bs4 import BeautifulSoup
 
 def url_list_from_txt(uploaded_file):
@@ -45,7 +46,9 @@ api_key = st.text_input("GeminiのAPI Keyを入力してください")
 # 検索ボタン
 if st.button("search"):
   if uploaded_file is not None:
-    data = url_list_from_txt(uploaded_file)
-    st.write(data)
+    urls = url_list_from_txt(uploaded_file)
+    for url in urls:
+      extracted_text = get_text_by_class(url,class_name)
+      st.write(extracted_text)
   else:
     st.warning("txtファイルをアップロードしてください")
