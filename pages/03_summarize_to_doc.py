@@ -45,8 +45,7 @@ api_key = st.text_input("GeminiのAPI Keyを入力してください")
 # 検索ボタン
 if st.button("search"):
   if uploaded_file is not None:
-    urls = uploaded_file.read()
-    data = url_list_from_txt(urls)
+    data = url_list_from_txt(uploaded_file)
     st.write(data)
   else:
     st.warning("txtファイルをアップロードしてください")
