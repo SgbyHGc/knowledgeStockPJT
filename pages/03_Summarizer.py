@@ -111,7 +111,7 @@ def gemini(extacted_text, api_key):
 
 def add_info(summary, title, url):
   summary = f"# タイトル: {title}\n○## URL: {url}\n{summary.strip()}\n---"
-  summary = summary.replace("○","  ").replace("■","    ")
+  summary = summary.replace("○","\t").replace("■","\t\t")
   print(summary)
   return summary
 
