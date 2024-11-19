@@ -118,7 +118,7 @@ def add_info(summary, title, url):
   return summary
 
 # Streamlitアプリのタイトルを設定
-st.title("データソースの出力")
+st.title("データの出力")
 
 st.markdown('---')
 st.markdown('要約を生成したいページのURLが入ったtxtファイルをアップロードしてください。個々のURLは改行で区切られている必要がありますpage-content--detail')

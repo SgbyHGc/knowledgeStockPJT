@@ -38,7 +38,7 @@ def search_keyword_in_div(url, keyword):
 
 
 # Streamlitアプリのタイトルを設定
-st.title("タグ検索 🔎")
+st.title("Class Nameを見つける 🔎")
 
 st.markdown('---')
 st.markdown('This app shows which tag in the HTML code the keyword you are looking for on your website belongs to. Enter the URL and keywords in the blanks below and press "search".')

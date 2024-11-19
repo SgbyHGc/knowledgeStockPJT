@@ -74,7 +74,7 @@ def crawl_web_pages(url, pattern, max_depth=2):
 
 
 # Streamlitアプリのタイトルを設定
-st.title("URL検索 🔎")
+st.title("URLリスト作成 🔎")
 
 st.markdown('---')
 st.markdown('This app gets a list of URLs under a specific URL. Enter the URL and subdirectory you want to check in the blanks. (Example of subdirectory: xxx part of `www.thinkwithgoogle.com/intl/ja-jp/xxx/`)')
