@@ -75,7 +75,7 @@ def gemini(extacted_text, api_key):
   - 文章の主要なポイントを要点として見逃さないよう注意して3~5個で抽出してください。
   - 要点を出力する際は簡潔に日本語で500文字以内に収めてください。
   - 検索用のタグとして、利用者が使えそうな検索用のタグも当てはまりそうなものを作ってください。
-  - 項目間に無用な改行を入れないでください。
+  - 無用な改行を入れないでください。
 
   ## Format
   ○ 要点
@@ -109,7 +109,7 @@ def gemini(extacted_text, api_key):
   return response.text
 
 def add_info(summary, title, url):
-  summary = f"● タイトル: {title}\n○ URL: {url}\n{summary.strip()}\n---\n\n"
+  summary = f"● タイトル: {title}\n○ URL: {url}\n{summary.strip()}\n---\n"
   print(summary)
   return summary
 
