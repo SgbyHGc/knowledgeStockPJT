@@ -101,7 +101,7 @@ if st.button("Search"):
       st.write(url)
     txt_data = "\n".join(urls)
     st.download_button(
-      label="Download",
+      label="Download txt file",
       data=txt_data,
       file_name="urls.txt",
       mime="text/plain",
