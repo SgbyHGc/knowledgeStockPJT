@@ -27,12 +27,13 @@ def get_text_by_class(url, class_name):
       extracted_text = re.sub(r"\n+", "\n", extracted_text)
       return extracted_text
     else:
+      st.write(f"No div on this webpage : {e}")
       return None
   except requests.exceptions.RequestException as e:
-    print(f"Failed to fetch the webpage: {e}")
+    st.write(f"Failed to fetch the webpage: {e}")
     return None
   except Exception as e:
-    print(f"An error occurred: {e}")
+    st.write(f"An error occurred: {e}")
     return None
   
 def get_title_from_url(url):
