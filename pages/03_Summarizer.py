@@ -138,6 +138,7 @@ summarized_text = []
 if st.button("Summarize"):
   if uploaded_file is not None and class_name and api_key:
     urls = url_list_from_txt(uploaded_file)
+    st.write(urls)
     for url in urls:
       extracted_text = get_text_by_class(url, class_name)
       if extracted_text is not None:
