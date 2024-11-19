@@ -41,7 +41,7 @@ def search_keyword_in_div(url, keyword):
 st.title("Class Nameを見つける 🔎")
 st.markdown('---')
 st.markdown("""
-URLを指定したページをキーワード検索し、該当箇所のdivタグのClass Nameを表示します。
+URLのページをキーワード検索し、該当箇所のdivタグのClass Nameを表示します。
 """)
 st.markdown('---')
 # URLとキーワードの入力

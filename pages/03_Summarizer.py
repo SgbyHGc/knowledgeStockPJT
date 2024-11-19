@@ -121,7 +121,13 @@ def add_info(summary, title, url):
 st.title("サマリーの出力 📚")
 
 st.markdown('---')
-st.markdown('要約を生成したいページのURLが入ったtxtファイルをアップロードしてください。個々のURLは改行で区切られている必要がありますpage-content--detail')
+st.markdown(
+"""
+URLのリスト(txtファイル)に順番にアクセスし、指定したClass Nameの箇所を抜粋してGeminiで要約した結果をテキストファイルにまとめます。
+要約を生成したいページのURLが入ったtxtファイルをアップロードしてください。
+個々のURLは改行で区切られている必要があります。
+page-content--detail
+""")
 st.markdown('---')
 
 # URLとキーワードの入力
