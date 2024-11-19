@@ -140,7 +140,6 @@ if st.button("Summarize"):
     urls = url_list_from_txt(uploaded_file)
     for url in urls:
       extracted_text = get_text_by_class(url, class_name)
-      st.write(extracted_text)
       if extracted_text is not None:
         title = get_title_from_url(url)
         summary = gemini(extracted_text, api_key)
