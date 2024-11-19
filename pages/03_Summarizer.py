@@ -79,19 +79,20 @@ def gemini(extracted_text, api_key):
   - 項目間に無用な改行を入れないでください。
 
   ## Format ##
-  ○ 要点
-  ■ 要点1)
-  ○ 検索用タグ
+  ## 要点
+  - 要点1)
+  ## 検索用タグ
 
   #例
-  ○ 要点
-  ■ 要点1)広告効果の多角的な「測定」の必要性: 近年のプライバシー保護強化により、従来のデータ計測が困難に。バンダイナムコエンターテインメント(BNEI)では、MMMやCausalImpactなどの手法を用い、多角的に広告効果を測定することで、変化への対応と意思決定を可能にしている。
-  要点2)MMMによる包括的な効果測定: 独自のMMMを開発し、オンライン・オフラインを含む多様なプロモーション施策のインストール数への貢献度を分析。施策間相互作用も考慮した予算配分や、予測値と実測値の誤差が少ない高精度なモデル構築を実現。
-  要点3)CausalImpactによる認知施策の効果検証: 従来、懐疑的な見方があった認知施策の効果を、CausalImpactを用いた分析により定量化。YouTube広告配信によるインストール数の純増や、ランディングページへの遷移率向上を実証し、認知施策の貢献度を明確化。
-  要点4)iOSアプリ広告における「推定ROAS」の活用: ATT導入によるiOSアプリ広告の効果測定の課題に対し、「推定ROAS」を開発・運用。従来のROASに近い数値を算出することで、iOSアプリキャンペーンの出稿タイトル数増加とROAS目標達成を実現。
-  要点5)多角的な検証による組織風土の醸成: MMM、CausalImpact、「推定ROAS」といった多角的な検証体制の構築により、社内のデータに基づいた意思決定を促進。データドリブンなマーケティングへの意識改革を推進し、組織全体の「測定」に対する意識向上を実現。
-  ○ 検索用タグ: 広告効果測定, MMM, CausalImpact, 推定ROAS, アプリビジネス, プライバシー保護, ATT, データドリブン, バンダイナムコエンターテインメント
+  ## 要点
+  - 要点1)広告効果の多角的な「測定」の必要性: 近年のプライバシー保護強化により、従来のデータ計測が困難に。バンダイナムコエンターテインメント(BNEI)では、MMMやCausalImpactなどの手法を用い、多角的に広告効果を測定することで、変化への対応と意思決定を可能にしている。
+  - 要点2)MMMによる包括的な効果測定: 独自のMMMを開発し、オンライン・オフラインを含む多様なプロモーション施策のインストール数への貢献度を分析。施策間相互作用も考慮した予算配分や、予測値と実測値の誤差が少ない高精度なモデル構築を実現。
+  - 要点3)CausalImpactによる認知施策の効果検証: 従来、懐疑的な見方があった認知施策の効果を、CausalImpactを用いた分析により定量化。YouTube広告配信によるインストール数の純増や、ランディングページへの遷移率向上を実証し、認知施策の貢献度を明確化。
+  - 要点4)iOSアプリ広告における「推定ROAS」の活用: ATT導入によるiOSアプリ広告の効果測定の課題に対し、「推定ROAS」を開発・運用。従来のROASに近い数値を算出することで、iOSアプリキャンペーンの出稿タイトル数増加とROAS目標達成を実現。
+  - 要点5)多角的な検証による組織風土の醸成: MMM、CausalImpact、「推定ROAS」といった多角的な検証体制の構築により、社内のデータに基づいた意思決定を促進。データドリブンなマーケティングへの意識改革を推進し、組織全体の「測定」に対する意識向上を実現。
+  ## 検索用タグ: 広告効果測定, MMM, CausalImpact, 推定ROAS, アプリビジネス, プライバシー保護, ATT, データドリブン, バンダイナムコエンターテインメント
   """
+
   genai.configure(api_key=api_key)
   prompt = template.replace("<text_data>", "\n".join(extracted_text))
   model = genai.GenerativeModel('gemini-1.5-flash')
@@ -107,6 +108,11 @@ def gemini(extracted_text, api_key):
   )
   time.sleep(2)
   return response.text
+
+def add_info(summary, title, url):
+  summary = f"# タイトル: {title}\n## URL: {url}\n{summary.strip()}\n---"
+  print(summary)
+  return summary
 
 # Streamlitアプリのタイトルを設定
 st.title("データソースの出力")
@@ -126,9 +132,10 @@ if st.button("Summarize"):
   if uploaded_file is not None and class_name and api_key:
     urls = url_list_from_txt(uploaded_file)
     for url in urls:
-      extracted_text = get_text_by_class(url,class_name)
+      extracted_text = get_text_by_class(url, class_name)
       title = get_title_from_url(url)
-      summary = gemini(extracted_text,api_key)
+      summary = gemini(extracted_text, api_key)
+      summary = add_info(summary, title, url)
       summarized_text.append(summary)
       st.write(summary)
     txt_data = "\n".join(summarized_text)
