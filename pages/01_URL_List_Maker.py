@@ -84,8 +84,8 @@ URLのページに記載されているリンクを辿ってURLのリストを�
 st.markdown('---')
 
 # Streamlitの入力フォーム
-start_url = st.text_input('URLを入力してください')
-url_pattern = st.text_input('キーワードを入力してください')
+start_url = st.text_input('URLを入力してください', placeholder='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/')
+url_pattern = st.text_input('キーワードを入力してください', placeholder='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
 # 検索ボタン
