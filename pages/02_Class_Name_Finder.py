@@ -45,8 +45,8 @@ URLのページをキーワード検索し、該当箇所のdivタグのClass Na
 """)
 st.markdown('---')
 # URLとキーワードの入力
-url = st.text_input("URLを入力してください", placeholder='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/automation/advances-in-broad-match')
-keyword = st.text_input("キーワードを入力してください", placeholder='AI の基盤となる技術の飛躍的な進化に伴い')
+url = st.text_input("URLを入力してください", value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/automation/advances-in-broad-match')
+keyword = st.text_input("キーワードを入力してください", value='AI の基盤となる技術の飛躍的な進化に伴い')
 
 # 検索ボタン
 if st.button("Search"):
