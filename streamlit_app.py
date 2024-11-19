@@ -1,6 +1,8 @@
 import streamlit as st
-st.title("使い方 📖")
+st.title("このページについて 📖")
 st.markdown("""
+---
+NotebookLM用データソースを作ります。         
 ---
 ### URL List Maker
 URLのページに記載されているリンクを辿ってURLのリストを作成します。
