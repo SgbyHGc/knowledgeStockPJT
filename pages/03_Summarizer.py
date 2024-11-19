@@ -138,10 +138,9 @@ summarized_text = []
 if st.button("Summarize"):
   if uploaded_file is not None and class_name and api_key:
     urls = url_list_from_txt(uploaded_file)
-    st.write(urls)
     for url in urls:
       extracted_text = get_text_by_class(url, class_name)
-      st.write(extracted_text))
+      st.write(extracted_text)
       if extracted_text is not None:
         title = get_title_from_url(url)
         summary = gemini(extracted_text, api_key)
