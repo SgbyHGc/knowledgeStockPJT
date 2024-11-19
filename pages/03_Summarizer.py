@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import streamlit as st
 import requests
 import time
@@ -56,17 +58,17 @@ def get_title_from_url(url):
     print(f"Failed to extract the title: {e}")
     return None
 
-def gemini(extracted_text, api_key):
-  template = """
-  ## Persona ##
+def gemini(extacted_text, api_key):
+  template = ""
+  ## Persona #
   あなたはトレーニング資料作成のスペシャリストです。
   以下のテキストデータから内容を読み取り、箇条書きで要点を詳細に説明してください。
 
-  ## Context ##
+  ## Context #
   営業部員が顧客向けの提案資料作成や顧客からの質問を受けた際に参考となる資料が多くありますが、
   一つ一つを把握することは困難なため全部読まなくても要点をつかめるようにまとめる必要があります。
 
-  ## テキストデータ ##
+  ## テキストータ ##
   <text_data>
 
   ## Task ##
@@ -81,7 +83,7 @@ def gemini(extracted_text, api_key):
   ## Format ##
   ## 要点
   1. 要点1
-  ## 検索用タグ
+  ## 検索用タ
 
   ## 例 ##
   ## 要点
