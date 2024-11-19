@@ -1,5 +1,5 @@
 import streamlit as st
-st.title("使い方")
+st.title("使い方 📖")
 st.markdown("""
 ### URL List Maker: 
 URLのページに記載されているリンクを再帰的に辿ってURLのリストを作成します。
