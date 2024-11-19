@@ -27,13 +27,12 @@ def get_text_by_class(url, class_name):
       extracted_text = re.sub(r"\n+", "\n", extracted_text)
       return extracted_text
     else:
-      st.write(f"No div on this webpage : {e}")
       return None
   except requests.exceptions.RequestException as e:
-    st.write(f"Failed to fetch the webpage: {e}")
+    print(f"Failed to fetch the webpage: {e}")
     return None
   except Exception as e:
-    st.write(f"An error occurred: {e}")
+    print(f"An error occurred: {e}")
     return None
   
 def get_title_from_url(url):
@@ -131,7 +130,7 @@ st.markdown('---')
 
 # URLとキーワードの入力
 uploaded_file = st.file_uploader("txtファイルを選択してください", type='txt')
-class_name = st.text_input("URLのページに共通する、抽出したい部分のclass nameを指定してください", value=' page-content--detail')
+class_name = st.text_input("URLのページに共通する、抽出したい部分のclass nameを指定してください", value='page-content--detail')
 api_key = st.text_input("GeminiのAPI Keyを入力してください")
 summarized_text = []
 
