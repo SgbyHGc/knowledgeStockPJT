@@ -79,7 +79,7 @@ def gemini(extacted_text, api_key):
 
   ## Format
   ○ 要点
-  ■ 要点1. 
+  ■ 要点1
   ○ 検索用タグ:
 
   ## 例
