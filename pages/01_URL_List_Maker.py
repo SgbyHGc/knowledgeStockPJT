@@ -75,15 +75,13 @@ def crawl_web_pages(url, pattern, max_depth=2):
 
 # Streamlitアプリのタイトルを設定
 st.title("URLリスト作成 📝")
-
+st.markdown('---')
 st.markdown("""
----
 URLのページに記載されているリンクを辿ってURLのリストを作成します。
 指定したキーワードが含まれるURLのみをリスト化します。サブディレクトリなどを指定してください。
 深度は、リンク先のリンクの深さを示します。リンク先のリンク先のリンクまで収集する場合は3。
----
 """)
-
+st.markdown('---')
 
 # Streamlitの入力フォーム
 start_url = st.text_input('URLを入力してください')
