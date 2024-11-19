@@ -59,7 +59,7 @@ def get_title_from_url(url):
     return None
 
 def gemini(extacted_text, api_key):
-  template = ""
+  template = """
   ## Persona #
   あなたはトレーニング資料作成のスペシャリストです。
   以下のテキストデータから内容を読み取り、箇条書きで要点を詳細に説明してください。
