@@ -142,7 +142,7 @@ if st.button("Summarize"):
         summary = gemini(extracted_text, api_key)
         summary = add_info(summary, title, url)
         summarized_text.append(summary)
-        st.code(summary)
+        st.write(summary)
       continue
     txt_data = "\n".join(summarized_text)
     st.download_button(
