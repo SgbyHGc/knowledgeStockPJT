@@ -110,7 +110,7 @@ def gemini(extacted_text, api_key):
   return response.text
 
 def add_info(summary, title, url):
-  summary = f"● タイトル: {title}\n○ URL: {url}\n{summary.replace("^\n", "").strip()}\n---\n"
+  summary = f"● タイトル: {title}\n○ URL: {url}\n{summary.replace("\n\n", "\n").replace("^\n", "").strip()}\n---\n"
   print(summary)
   return summary
 
@@ -142,7 +142,7 @@ if st.button("Summarize"):
         summary = gemini(extracted_text, api_key)
         summary = add_info(summary, title, url)
         summarized_text.append(summary)
-        st.markdown(summary)
+        st.code(summary)
       continue
     txt_data = "\n".join(summarized_text)
     st.download_button(
