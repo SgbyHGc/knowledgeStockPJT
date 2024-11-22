@@ -113,6 +113,9 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 checked_urls = {}
 selected_urls = []
 
+def update_checked_urls(url):
+    st.session_state.checked_urls[url] = not st.session_state.checked_urls[url]
+
 # 検索ボタン
 if st.button("Search"):
   # クロール処理
@@ -127,10 +130,9 @@ if st.button("Search"):
     for url in urls:
       title = get_title_from_url(url)
       st.write(title)
-      st.session_state.checked_urls[url] = st.checkbox(url, value=st.session_state.checked_urls[url])
+      st.checkbox(url, value=st.session_state.checked_urls[url], key=url, on_change=update_checked_urls, args=(url,))
 
-    selected_urls = [url for url, checked in st.session_state.checked_urls.items() if checked]
-
+    selected_urls = [url for url, checked in st.session_state.checked_urls.items() if checked]  
     txt_data = "\n".join(selected_urls)
     st.download_button(
       label="Download txt file",
