@@ -123,7 +123,7 @@ if st.button("Search"):
   st.subheader('results:')
   if urls:
     for url in urls:
-      checked_urls[url] = st.checkbox(url, value=True)
+      checked_urls[url] = st.checkbox(url)
     for url, checked in checked_urls.items():
         if checked:
             selected_urls.append(url)
