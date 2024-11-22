@@ -135,20 +135,20 @@ if st.button("Search"):
         st.subheader('results:')
 
         # チェックボックスの状態を st.session_state に保存
-        for url in urls:
-            key = f"checkbox_{url}"  # 各URLに固有のキーを作成
-            if key not in st.session_state:
-                st.session_state[key] = False  # 初期状態はFalse
+        for i, url in enumerate(urls):
+            key = f"checkbox_{i}_{url}"
 
-            if st.checkbox(url, key=key, value=st.session_state[key]): # valueを指定
+            if key not in st.session_state:
+                st.session_state[key] = False
+
+            if st.checkbox(url, key=key, value=st.session_state[key]):
                 st.session_state[key] = True
                 if url not in st.session_state.selected_urls:
                     st.session_state.selected_urls.append(url)
-            elif url in st.session_state.selected_urls:
+            else:
                 st.session_state[key] = False
-                st.session_state.selected_urls.remove(url)
+                if url in st.session_state.selected_urls:
+                    st.session_state.selected_urls.remove(url)
 
-        download_selected_urls(st.session_state.selected_urls)  # st.session_state からURLを取得
-
-
+        download_selected_urls(st.session_state.selected_urls)
     
