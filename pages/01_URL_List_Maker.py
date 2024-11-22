@@ -120,7 +120,7 @@ if st.button("Search"):
       
   if urls:
     st.subheader('results:')
-    selected_urls = st.multiselect(urls)
+    selected_urls = st.multiselect('',urls)
     txt_data = "\n".join(selected_urls)
     st.download_button(
         label="Download txt file",
