@@ -75,7 +75,8 @@ def crawl_web_pages(url, pattern, max_depth=2):
 
 
 def download_urls(urls):
-    data = "\n".join(urls).encode('utf-8')
+    selected_urls = st.multiselect("URLを選択", urls, key="multiselect_key")
+    data = "\n".join(selected_urls).encode('utf-8')
     filename = "selected_urls.txt"
     st.download_button(
         label="選択したURLをダウンロード",
@@ -84,10 +85,6 @@ def download_urls(urls):
         mime="text/plain",
     )
 
-def handle_url_selection(urls):
-    """URL選択とダウンロード処理を扱う補助関数"""
-    selected_urls = st.multiselect("URLを選択", urls, key="multiselect_key")
-    download_urls(selected_urls)
 
 # Streamlitアプリのタイトルを設定
 st.title("URLリスト作成 📝")
@@ -115,5 +112,5 @@ if st.button("Download"):
     if st.session_state.result is None:
         st.write("関数1の結果がまだありません。")
     else:
-        handle_url_selection(st.session_state.result)
+        download_urls(st.session_state.result)
 
