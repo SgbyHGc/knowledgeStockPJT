@@ -113,10 +113,7 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 checked_urls = {}
 selected_urls = []
 
-if "selected_urls" not in st.session_state:
-    st.session_state.selected_urls = []
-
-<<<<<<< HEAD
+# 検索ボタン
 if st.button("Search"):
     # クロール処理
     with st.spinner('Crawling... This may take minutes'):
@@ -125,21 +122,13 @@ if st.button("Search"):
     # 結果表示
     st.subheader('results:')
     if urls:
+        selected_urls = []  # 選択されたURLを格納するリスト
         for url in urls:
-            key = f"checkbox_{url}"  # 各URLに固有のキーを作成
-            if key not in st.session_state:
-                st.session_state[key] = False  # 初期状態はFalse
+            if st.checkbox(url):  # チェックボックスが選択されている場合
+                selected_urls.append(url)  # リストにURLを追加
 
-            if st.checkbox(url, key=key, value=st.session_state[key]):
-                st.session_state[key] = True  # チェックされたらTrue
-                st.session_state.selected_urls.append(url)
-            else:
-                st.session_state[key] = False  # チェックが外れたらFalse
-                if url in st.session_state.selected_urls:
-                    st.session_state.selected_urls.remove(url)
-
-        if st.session_state.selected_urls:
-            txt_data = "\n".join(st.session_state.selected_urls)
+        if selected_urls:  # 選択されたURLがある場合のみダウンロードボタンを表示
+            txt_data = "\n".join(selected_urls)
             st.download_button(
                 label="Download txt file",
                 data=txt_data,
@@ -150,22 +139,6 @@ if st.button("Search"):
             st.write('URLが選択されていません。')
     else:
         st.write('一致するURLは見つかりませんでした。')
-=======
-  # 結果表示
-  st.subheader('results:')
-  if urls:
-    st.write(get_title_from_url(url))
-    selected_urls = [url for url in urls if st.checkbox(url, value=True)]
-    txt_data = "\n".join(selected_urls)
-    st.download_button(
-      label="Download txt file",
-      data=txt_data,
-      file_name="urls.txt",
-      mime="text/plain",
-      )
-  else:
-    st.write('一致するURLは見つかりませんでした。')
->>>>>>> 29bf59f (1)
 
 
 
