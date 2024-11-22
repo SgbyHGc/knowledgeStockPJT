@@ -122,10 +122,8 @@ if st.button("Search"):
   # 結果表示
   st.subheader('results:')
   if urls:
+    st.write(get_title_from_url(url))
     selected_urls = [url for url in urls if st.checkbox(url, value=True)]
-    for url in selected_urls:
-      title = get_title_from_url(url)
-      st.write(url)
     txt_data = "\n".join(selected_urls)
     st.download_button(
       label="Download txt file",
