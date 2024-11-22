@@ -123,16 +123,16 @@ if st.button("Search"):
         st.subheader('results:')
         for url in urls:
           checked_urls[url] = st.checkbox(url)
-          if checked_urls:
-            selected_urls = [url for url, checked in checked_urls.items() if checked]
-            if selected_urls:
-              txt_data = "\n".join(selected_urls)
-              st.download_button(
-                  label="Download txt file",
-                  data=txt_data,
-                  file_name="urls.txt",
-                  mime="text/plain",
-              )
+        if checked_urls:
+          selected_urls = [url for url, checked in checked_urls.items() if checked]
+          if selected_urls:
+            txt_data = "\n".join(selected_urls)
+            st.download_button(
+                label="Download txt file",
+                data=txt_data,
+                file_name="urls.txt",
+                mime="text/plain",
+            )
 
 
 
