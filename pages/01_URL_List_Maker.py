@@ -124,14 +124,14 @@ if st.button("Search"):
     for url in urls:
         if st.checkbox(url):
             selected_urls.append(url)
-  if selected_urls:
-    txt_data = "\n".join(selected_urls)
-    st.download_button(
-        label="Download txt file",
-        data=txt_data,
-        file_name="urls.txt",
-        mime="text/plain",
-    )
+    if selected_urls:
+      txt_data = "\n".join(selected_urls)
+      st.download_button(
+          label="Download txt file",
+          data=txt_data,
+          file_name="urls.txt",
+          mime="text/plain",
+      )
 
 
 
