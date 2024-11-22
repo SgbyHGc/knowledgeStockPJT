@@ -118,20 +118,20 @@ if st.button("Search"):
   with st.spinner('Crawling... This may take minutes'):
       urls = crawl_web_pages(start_url, url_pattern, max_depth)
       
-  if urls:
-    st.subheader('results:')
-    selected_urls = []
-    for url in urls:
-        if st.checkbox(url):
-            selected_urls.append(url)
-  if selected_urls:
-    txt_data = "\n".join(selected_urls)
-    st.download_button(
-        label="Download txt file",
-        data=txt_data,
-        file_name="urls.txt",
-        mime="text/plain",
-    )
+if urls:
+  st.subheader('results:')
+  selected_urls = []
+  for url in urls:
+      if st.checkbox(url):
+          selected_urls.append(url)
+if selected_urls:
+  txt_data = "\n".join(selected_urls)
+  st.download_button(
+      label="Download txt file",
+      data=txt_data,
+      file_name="urls.txt",
+      mime="text/plain",
+  )
 
 
 
