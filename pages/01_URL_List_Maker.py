@@ -131,22 +131,10 @@ if st.button("Search"):
     with st.spinner('Crawling... This may take minutes'):
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
-    if urls is not None:
-        st.subheader('results:')
+selected_urls = {}
+for name, url in urls.items():
+    if st.checkbox(name):
+        selected_urls[name] = url
 
-        # チェックボックスの状態を st.session_state に保存
-        for url in urls:
-            key = f"checkbox_{url}"  # 各URLに固有のキーを作成
-            if key not in st.session_state:
-                st.session_state[key] = False  # 初期状態はFalse
-
-            if st.checkbox(url, key=key, value=st.session_state[key]): # valueを指定
-                st.session_state[key] = True
-                if url not in st.session_state.selected_urls:
-                    st.session_state.selected_urls.append(url)
-            elif url in st.session_state.selected_urls:
-                st.session_state[key] = False
-                st.session_state.selected_urls.remove(url)
-
-        download_selected_urls(st.session_state.selected_urls)  # st.session_state からURLを取得
+download_selected_urls(st.session_state.selected_urls)  # st.session_state からURLを取得
     
