@@ -116,37 +116,39 @@ URLのページに記載されているリンクを辿ってURLのリストを�
 深度は、リンク先のリンクの深さを示します。リンク先のリンク先のリンクまで収集する場合は3。
 """)
 st.markdown('---')
-st.markdown(
-    """
-    <style>
-        div[data-testid="stMultiSelect"] > div {
-            width: 100%;  /* multiselectコンテナの幅を100%にする */
-        }
-        div[data-testid="stMultiSelect"] > div > div > div {
-            width: 100%; /*内部のdivの幅も100%に調整*/
-        }
-    </style>""",
-    unsafe_allow_html=True,
-)
+# st.session_state を初期化
+if 'selected_urls' not in st.session_state:
+    st.session_state.selected_urls = []
+
 # Streamlitの入力フォーム
 start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/')
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
-
 # 検索ボタン
 if st.button("Search"):
-  # クロール処理
-  with st.spinner('Crawling... This may take minutes'):
-    urls = crawl_web_pages(start_url, url_pattern, max_depth)
-  if urls is not None:
-    st.subheader('results:')
-    selected_urls = []
-    for url in urls:
-      if st.checkbox(url):
-        selected_urls.append(url)
-    download_selected_urls(selected_urls)
+    # クロール処理
+    with st.spinner('Crawling... This may take minutes'):
+        urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
+    if urls is not None:
+        st.subheader('results:')
+
+        # チェックボックスの状態を st.session_state に保存
+        for url in urls:
+            key = f"checkbox_{url}"  # 各URLに固有のキーを作成
+            if key not in st.session_state:
+                st.session_state[key] = False  # 初期状態はFalse
+
+            if st.checkbox(url, key=key, value=st.session_state[key]): # valueを指定
+                st.session_state[key] = True
+                if url not in st.session_state.selected_urls:
+                    st.session_state.selected_urls.append(url)
+            elif url in st.session_state.selected_urls:
+                st.session_state[key] = False
+                st.session_state.selected_urls.remove(url)
+
+        download_selected_urls(st.session_state.selected_urls)  # st.session_state からURLを取得
 
 
     
