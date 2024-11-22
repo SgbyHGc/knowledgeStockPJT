@@ -104,7 +104,9 @@ if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
     if urls:
         selected_urls = []
-        for url in urls:
-            selected_urls.append(st.checkbox(url))
-        st.write(selected_urls)
+        with st.form():
+            for url in urls:
+                selected_urls.append(st.checkbox(url))
+        if st.form_submit_button('test'):
+            st.write(selected_urls)
 
