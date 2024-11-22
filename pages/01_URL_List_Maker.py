@@ -116,5 +116,5 @@ if st.button("Download"):
     if st.session_state.result is None:
         st.write("関数1の結果がまだありません。")
     else:
-        download_urls(st.session_state.result)
+        handle_url_selection(st.session_state.result)
 
