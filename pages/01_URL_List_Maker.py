@@ -119,12 +119,12 @@ if st.button("Search"):
   with st.spinner('Crawling... This may take minutes'):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
+  if "checked_urls" not in st.session_state:
+  st.session_state.checked_urls = {url: True for url in urls}
   # 結果表示
   st.subheader('results:')
   if urls:
-    # セッション状態の初期化
-    if "checked_urls" not in st.session_state:
-      st.session_state.checked_urls = {url: True for url in urls}
+
     for url in urls:
       title = get_title_from_url(url)
       st.write(title)
