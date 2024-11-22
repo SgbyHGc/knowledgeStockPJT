@@ -101,6 +101,7 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
+    st.write(urls)
 if urls is not None:
     if "selected_urls" not in st.session_state:
         st.session_state.selected_urls = []
