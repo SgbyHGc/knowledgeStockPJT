@@ -72,8 +72,8 @@ URLのページに記載されているリンクを辿ってURLのリストを�
 """)
 st.markdown('---')
 
+st.session_state.urls = None
 
-selected_urls = []
 with st.form('crawl'):
     start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/')
     url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
