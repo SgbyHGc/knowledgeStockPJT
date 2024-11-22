@@ -124,9 +124,9 @@ if st.button("Search"):
   if urls:
     for url in urls:
       checked_urls[url] = st.checkbox(url)
-    for url, checked in checked_urls.items():
-        if checked:
-            selected_urls.append(url)
+      for url, checked in checked_urls.items():
+          if checked:
+              selected_urls.append(url)
     for url in selected_urls:
       title = get_title_from_url(url)
       st.write(url)
