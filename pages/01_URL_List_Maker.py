@@ -120,10 +120,7 @@ if st.button("Search"):
       
   if urls:
     st.subheader('results:')
-    selected_urls = []
-    for url in urls:
-        if st.checkbox(url):
-            selected_urls.append(url)
+    selected_urls = st.multiselect(urls)
     if selected_urls:
       txt_data = "\n".join(selected_urls)
       st.download_button(
