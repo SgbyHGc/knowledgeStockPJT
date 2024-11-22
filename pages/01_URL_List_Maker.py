@@ -120,9 +120,10 @@ if st.button("Search"):
       urls = crawl_web_pages(start_url, url_pattern, max_depth)
       
 if urls:
-  for url in urls:
-    checked_urls[url] = st.checkbox(url)
   st.subheader('results:')
+  for url in urls:
+    st.checkbox(url)
+
   selected_urls = [url for url, checked in checked_urls.items() if checked]
   if selected_urls:
     txt_data = "\n".join(selected_urls)
