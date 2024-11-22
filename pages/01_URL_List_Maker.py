@@ -94,7 +94,7 @@ def download_urls(selected_urls):
 
 
 # Streamlitアプリのタイトルを設定
-st.title("URLリスト作成 📝")
+st.title("URLリストの作成 📝")
 st.markdown('---')
 st.markdown("""
 URLのページに記載されているリンクを辿ってURLのリストを作成します。\n
