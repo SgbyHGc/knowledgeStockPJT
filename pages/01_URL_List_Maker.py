@@ -101,13 +101,13 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 urls = ['aaa','bbb', 'cccccccccccccccccccccccccccccccccc']
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
-    st.write(urls)
-    if urls is not None:
-        if "selected_urls" not in st.session_state:
-            st.session_state.selected_urls = []
 
-        selected_urls = st.multiselect("URLを選択", urls, key="selected_urls")
-        if selected_urls:
-            download_urls(selected_urls)
-        else:
-            st.warning("URLが選択されていません。")
+    if urls:
+        multiselect_placeholder = st.empty() # プレースホルダーを作成
+        selected_urls = multiselect_placeholder.multiselect("URLを選択", urls, key="multiselect_key")
+
+        if st.button("選択したURLをダウンロード", use_container_width=True):
+          if selected_urls:
+              download_urls(selected_urls)
+          else:
+              st.warning("URLが選択されていません。")
