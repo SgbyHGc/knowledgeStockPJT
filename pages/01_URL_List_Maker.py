@@ -113,26 +113,23 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 checked_urls = {}
 selected_urls = []
 
-def update_checked_urls(url):
-    st.session_state.checked_urls[url] = not st.session_state.checked_urls[url]
-
 # 検索ボタン
 if st.button("Search"):
   # クロール処理
   with st.spinner('Crawling... This may take minutes'):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
-  if "checked_urls" not in st.session_state:
-    st.session_state.checked_urls = {url: True for url in urls}
   # 結果表示
   st.subheader('results:')
   if urls:
     for url in urls:
+      checked_urls[url] = st.checkbox(url, value=True)
+    for url, checked in checked_urls.items():
+        if checked:
+            selected_urls.append(url)
+    for url in selected_urls:
       title = get_title_from_url(url)
-      st.write(title)
-      st.checkbox(url, value=st.session_state.checked_urls[url], key=url, on_change=update_checked_urls, args=(url,))
-
-    selected_urls = [url for url, checked in st.session_state.checked_urls.items() if checked]  
+      st.write(url)
     txt_data = "\n".join(selected_urls)
     st.download_button(
       label="Download txt file",
