@@ -100,6 +100,23 @@ def download_selected_urls(urls):
         st.warning("Please select at least one URL.")
         return
 
+def download_selected_urls(urls):
+    if not urls:
+        st.warning("Please select at least one URL.")
+        return
+
+    text_content = "\n".join(urls)
+    filename = "selected_urls.txt"
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(text_content)
+
+    with open(filename, "rb") as f:
+        st.download_button(
+            label="選択したURLをダウンロード",
+            data=f,
+            file_name=filename,
+            mime="text/plain",
+        )
 
 # Streamlitアプリのタイトルを設定
 st.title("URLリスト作成 📝")
@@ -116,12 +133,21 @@ start_url = st.text_input('URLを入力してください', value='https://www.t
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
+if "checked_urls" not in st.session_state:
+    st.session_state.checked_urls = []
 
-if st.button("Search"): 
-  urls = crawl_web_pages(start_url, url_pattern, max_depth)
-  if urls:
-    selected_urls = []
-    for url in urls:
-      if st.checkbox(url):
-        selected_urls.append(url)
-    download_selected_urls(selected_urls)
+if st.button("Search"):
+    urls = crawl_web_pages(start_url, url_pattern, max_depth)
+    if urls:
+        selected_urls = []
+        for url in urls:
+            # st.session_state を使ってチェックボックスの状態を管理
+            is_checked = st.checkbox(url, value=(url in st.session_state.checked_urls))
+            if is_checked:
+                selected_urls.append(url)
+                if url not in st.session_state.checked_urls:
+                  st.session_state.checked_urls.append(url)
+            elif url in st.session_state.checked_urls:  # チェックが外された場合
+                  st.session_state.checked_urls.remove(url)
+
+        download_selected_urls(selected_urls)
