@@ -90,8 +90,8 @@ st.markdown('---')
 if 'urls' not in st.session_state:
     st.session_state.urls = []
 if 'selected_urls' not in st.session_state:
-    # Assuming the same length as URLs
-    st.session_state.selected_urls = [False] * len(st.session_state.urls)  # Initialize with False (unchecked)
+    st.session_state.selected_urls = []
+
 
 with st.form('crawl'):
     start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/search/')
@@ -101,6 +101,10 @@ with st.form('crawl'):
     if submit_crawl:
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
         st.session_state.urls = urls
+
+if 'selected_urls' not in st.session_state:
+    # Assuming the same length as URLs
+    st.session_state.selected_urls = [False] * len(st.session_state.urls)  # Initialize with False (unchecked)
 
 if st.session_state.urls:
     for i, url in enumerate(st.session_state.urls):
