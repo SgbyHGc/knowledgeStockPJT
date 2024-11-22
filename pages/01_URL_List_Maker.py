@@ -92,7 +92,7 @@ with st.form('download'):
     if st.session_state.urls:  # URLが存在する場合
         for i, url in enumerate(st.session_state.urls):
             # チェックボックスにユニークなキーを割り当てる
-            selected = st.checkbox(url, url)
+            selected = st.checkbox(url, key=f"checkbox_{i}")
             st.write(selected)
             st.session_state.selected_urls[i] = selected
 
