@@ -98,28 +98,31 @@ start_url = st.text_input('URLを入力してください', value='https://www.t
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
+if "url_states" not in st.session_state:
+    st.session_state.url_states = {}
+
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
     if urls:
         selected_urls = []
         for url in urls:
-            key = f"button_{url}"
+            # URLをハッシュ化して安全なキーを生成
+            key = f"button_{hashlib.sha256(url.encode()).hexdigest()}"  # 変更点
             is_selected = st.session_state.url_states.get(key, False)
-            if st.button(url, key=key):
+            if st.button(url, key=key):  # 変更点
                 is_selected = not is_selected
             st.session_state.url_states[key] = is_selected
 
             if is_selected:
                 selected_urls.append(url)
 
-        # ここに変更を加えます
-        if st.button("選択したURLをダウンロード", use_container_width=True):  # use_container_widthを追加
+        if st.button("選択したURLをダウンロード", use_container_width=True):
             if selected_urls:
                 download_urls(selected_urls)
             else:
-                st.warning("URLが選択されていません。") # ダウンロードボタンを押したときに警告を表示
-    elif not urls and start_url and url_pattern: # クロール結果が空で、入力があれば
-        st.warning("条件に一致するURLが見つかりませんでした。") # 検索ボタンを押したときに警告を表示
-    elif not start_url or not url_pattern: # URLまたはキーワードが入力されていない場合
+                st.warning("URLが選択されていません。")
+    elif not urls and start_url and url_pattern:
+        st.warning("条件に一致するURLが見つかりませんでした。")
+    elif not start_url or not url_pattern:
         st.warning("URLとキーワードを入力してください")
