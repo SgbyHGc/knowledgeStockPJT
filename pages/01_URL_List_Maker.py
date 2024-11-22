@@ -143,6 +143,7 @@ if st.button("Search"):
                     selected_urls.append(url)
 
             submitted = st.form_submit_button("選択したURLをダウンロード")
-            if submitted:
-                st.write("Form submitted!") 
+
+            if submitted:  # st.form ブロックの外で確認
+                st.write(f"submitted: {submitted}") # submitted の値を表示
                 st.session_state.checked_urls = set(selected_urls)
