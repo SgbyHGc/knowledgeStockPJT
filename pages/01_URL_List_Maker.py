@@ -128,10 +128,10 @@ if st.button("Search"):
     with st.spinner('Crawling... This may take minutes'):
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
-selected_urls = {}
-for name, url in urls.items():
-    if st.checkbox(name):
-        selected_urls[name] = url
+    selected_urls = {}
+    for name, url in urls.items():
+        if st.checkbox(name):
+            selected_urls[name] = url
 
-download_selected_urls(st.session_state.selected_urls)  # st.session_state からURLを取得
+    download_selected_urls(st.session_state.selected_urls)  # st.session_state からURLを取得
     
