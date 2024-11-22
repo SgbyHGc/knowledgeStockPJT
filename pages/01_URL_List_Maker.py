@@ -4,129 +4,75 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 import time
+import io
 
 def crawl_web_pages(url, pattern, max_depth=2):
-  """
-  Crawls a given URL recursively to extract unique links to web pages
-  matching a specific pattern.
+    """Crawls web pages and returns matching URLs."""
+    visited_urls = set()
+    urls = []
 
-  This function starts at a given URL and explores linked pages up to a
-  specified depth, collecting only the URLs that match the provided pattern
-  and lead to web pages (HTML documents). It avoids revisiting the same URLs
-  to prevent infinite loops.
+    def crawl(url, depth):
+        """Recursive crawling function."""
+        if depth > max_depth:
+            return
 
-  Args:
-    url: The URL to start crawling.
-    pattern: A string representing the pattern to match in the URLs (e.g., "/blog/").
-    max_depth: The maximum depth to crawl.
+        if url in visited_urls:
+            return
+        visited_urls.add(url)
 
-  Returns:
-    A list of unique URLs matching the pattern and leading to web pages.
-  """
-  visited_urls = set()
-  urls = []
+        try:
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            time.sleep(1)  # Reduce delay to 1 second
 
-  def crawl(url, depth):
-    """
-    Performs the recursive crawling.
+            if 'text/html' not in response.headers.get('content-type', ''):
+                return
 
-    Args:
-      url: The URL to crawl.
-      depth: The current depth of the crawl.
-    """
-    if depth > max_depth:
-      return
+        except requests.exceptions.RequestException as e:
+            st.error(f"Error fetching {url}: {e}")  # Use st.error for cleaner output
+            return
 
-    if url in visited_urls:
-      return
-    visited_urls.add(url)
+        soup = BeautifulSoup(response.content, "html.parser")
 
-    try:
-      response = requests.get(url, timeout=10)
-      response.raise_for_status()
-      time.sleep(3)
+        if pattern in urlparse(url).path:
+            urls.append(url)
 
-      # Check if the response is an HTML document
-      if 'text/html' not in response.headers['content-type']:
-        return
+        for link in soup.find_all("a", href=True):
+            absolute_url = urljoin(url, link["href"])
+            parsed_link = urlparse(absolute_url)
+            if not parsed_link.path.endswith(('.jpg', '.jpeg', '.png', '.gif', '.pdf', '.zip', '.rar')):
+                crawl(absolute_url, depth + 1)
 
-    except requests.exceptions.RequestException as e:
-      print(f"Error fetching {url}: {e}")
-      return
-
-    soup = BeautifulSoup(response.content, "html.parser")
-
-    # Check if the current URL matches the pattern
-    if pattern in urlparse(url).path:
-      urls.append(url)
-      print(f"Found URL: {url}")
-
-    for link in soup.find_all("a", href=True):
-      absolute_url = urljoin(url, link["href"])
-
-      # Check if the link leads to a web page (not an image, PDF, etc.)
-      parsed_link = urlparse(absolute_url)
-      if not parsed_link.path.endswith(('.jpg', '.jpeg', '.png', '.gif', '.pdf', '.zip', '.rar')):
-        crawl(absolute_url, depth + 1)
-
-  crawl(url, 1)
-  return urls
-
-def get_title_from_url(url):
-  """
-  Fetches the title of a web page given its URL.
-
-  Args:
-    url: The URL of the web page.
-
-  Returns:
-    The title of the web page (str).
-  """
-  try:
-    response = requests.get(url)
-    response.raise_for_status()  # Raise an exception for error status codes
-    soup = BeautifulSoup(response.content, "html.parser")
-    title = soup.find("title").text
-    return title
-  except requests.exceptions.RequestException as e:
-    print(f"Failed to fetch the page: {e}")
-    return None
-  except Exception as e:
-    print(f"Failed to extract the title: {e}")
-    return None
+    crawl(url, 1)
+    return urls
 
 def download_urls(urls):
+    """Downloads selected URLs as a text file."""
     if not urls:
-        st.warning("Please select at least one URL.")
+        st.warning("No URLs selected.")
         return
 
-    text_content = "\n".join(urls)
-    filename = "selected_urls.txt"
+    f = io.StringIO("\n".join(urls))  # Use StringIO to create in-memory file
     st.download_button(
-        label="選択したURLをダウンロード",
+        label="Download Selected URLs",
         data=f,
-        file_name=filename,
+        file_name="selected_urls.txt",
         mime="text/plain",
     )
 
 
-# Streamlitアプリのタイトルを設定
-st.title("URLリスト作成 📝")
-st.markdown('---')
+st.title("URL List Generator")
 st.markdown("""
-URLのページに記載されているリンクを辿ってURLのリストを作成します。
-指定したキーワードが含まれるURLのみをリスト化します。サブディレクトリなどを指定してください。
-深度は、リンク先のリンクの深さを示します。リンク先のリンク先のリンクまで収集する場合は3。
+This tool crawls a website and generates a list of URLs matching a specific pattern.
 """)
-st.markdown('---')
 
-# Streamlitの入力フォーム
-start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/')
-url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
-max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
+
+start_url = st.text_input("Enter starting URL", value="https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/")
+url_pattern = st.text_input("Enter keyword/pattern", value="/marketing-strategies/")
+max_depth = st.number_input("Enter max depth", min_value=1, max_value=3, value=2)
 
 if "url_states" not in st.session_state:
-    st.session_state.url_states = {}  # URLの状態を保存する辞書
+    st.session_state.url_states = {}
 
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
@@ -135,19 +81,12 @@ if st.button("Search"):
         selected_urls = []
         for url in urls:
             key = f"button_{url}"
-
-            # セッション状態からボタンの状態を取得、存在しない場合はFalseで初期化
-            is_selected = st.session_state.url_states.get(key, False) 
-
-            # ボタンの状態を反転
-            if st.button(url, key=key):
-                is_selected = not is_selected  # 反転
-
-            # セッション状態にボタンの状態を保存
-            st.session_state.url_states[key] = is_selected  
-
-            if is_selected:
+            is_selected = st.session_state.url_states.get(key, False)
+            if st.checkbox(url, key=key, value=is_selected):  # Use checkbox for selection
+                st.session_state.url_states[key] = True
                 selected_urls.append(url)
+            else:
+                st.session_state.url_states[key] = False  # Uncheck
 
-        if st.button("選択したURLをダウンロード", use_container_width=True):
-            download_urls(selected_urls)
+
+        download_urls([url for url, selected in st.session_state.url_states.items() if selected and url.startswith("button_")]) # Download based on checkbox state
