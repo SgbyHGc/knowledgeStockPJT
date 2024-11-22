@@ -100,23 +100,22 @@ def download_selected_urls(urls):
         st.warning("Please select at least one URL.")
         return
 
-def download_selected_urls(urls):
-    if not urls:
-        st.warning("Please select at least one URL.")
-        return
+    try:
+        text_content = "\n".join(urls)
+        filename = "selected_urls.txt"
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(text_content)
 
-    text_content = "\n".join(urls)
-    filename = "selected_urls.txt"
-    with open(filename, "w", encoding="utf-8") as f:
-        f.write(text_content)
+        with open(filename, "rb") as f:
+            st.download_button(
+                label="選択したURLをダウンロード",
+                data=f,
+                file_name=filename,
+                mime="text/plain",
+            )
 
-    with open(filename, "rb") as f:
-        st.download_button(
-            label="選択したURLをダウンロード",
-            data=f,
-            file_name=filename,
-            mime="text/plain",
-        )
+    except Exception as e:
+        st.error(f"ファイル作成エラー: {e}")
 
 # Streamlitアプリのタイトルを設定
 st.title("URLリスト作成 📝")
