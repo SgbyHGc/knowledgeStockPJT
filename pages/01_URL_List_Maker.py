@@ -101,12 +101,12 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
-    if urls:
-        if "selected_urls" not in st.session_state:
-            st.session_state.selected_urls = []
+if urls:
+    if "selected_urls" not in st.session_state:
+        st.session_state.selected_urls = []
 
-        selected_urls = st.multiselect("URLを選択", urls, key="selected_urls")
-        if selected_urls:
-            download_urls(selected_urls)
-        else:
-            st.warning("URLが選択されていません。")
+    selected_urls = st.multiselect("URLを選択", urls, key="selected_urls")
+    if selected_urls:
+        download_urls(selected_urls)
+    else:
+        st.warning("URLが選択されていません。")
