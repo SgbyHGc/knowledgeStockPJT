@@ -127,11 +127,11 @@ if st.button("Search"):
     # クロール処理
     with st.spinner('Crawling... This may take minutes'):
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
-
-    selected_urls = {}
-    for name, url in urls.items():
-        if st.checkbox(name):
-            selected_urls[name] = url
-
-    download_selected_urls(st.session_state.selected_urls)  # st.session_state からURLを取得
+    if urls is not None:
+      selected_urls = []
+      for i, url in enumerate(urls):
+          if st.checkbox(url, key=f"checkbox_{i}"):
+              selected_urls.append(url)
+      if selected_urls:
+        download_selected_urls(selected_urls)  # st.session_state からURLを取得
     
