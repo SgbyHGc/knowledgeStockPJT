@@ -141,7 +141,10 @@ if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
   if urls is not None:
     st.subheader('results:')
-    selected_urls = st.multiselect('', urls, urls)
+    selected_urls = []
+    for url in urls:
+      if st.checkbox(url):
+        selected_urls.append(url)
     download_selected_urls(selected_urls)
 
 
