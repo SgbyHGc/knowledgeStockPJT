@@ -125,26 +125,29 @@ start_url = st.text_input('URLを入力してください', value='https://www.t
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
-if "checked_urls" not in st.session_state:
-    st.session_state.checked_urls = set()
+if "url_states" not in st.session_state:
+    st.session_state.url_states = {}  # URLの状態を保存する辞書
 
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
     if urls:
-        selected_urls = set(st.session_state.checked_urls)  # selected_urls を set に変更
-
+        selected_urls = []
         for url in urls:
-            # ボタンのkeyを一意にする
             key = f"button_{url}"
+
+            # セッション状態からボタンの状態を取得、存在しない場合はFalseで初期化
+            is_selected = st.session_state.url_states.get(key, False) 
+
+            # ボタンの状態を反転
             if st.button(url, key=key):
-                if url in selected_urls:
-                    selected_urls.remove(url)
-                else:
-                    selected_urls.add(url)
+                is_selected = not is_selected  # 反転
 
-            st.session_state.checked_urls = list(selected_urls)  # session_stateをリストで更新
+            # セッション状態にボタンの状態を保存
+            st.session_state.url_states[key] = is_selected  
 
+            if is_selected:
+                selected_urls.append(url)
 
         if st.button("選択したURLをダウンロード", use_container_width=True):
-            download_selected_urls(list(selected_urls)) # selected_urls をリストに変換して渡す
+            download_selected_urls(selected_urls)
