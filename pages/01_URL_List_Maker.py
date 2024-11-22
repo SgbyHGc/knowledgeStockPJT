@@ -101,10 +101,8 @@ with st.form('crawl'):
     if submit_crawl:
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
         st.session_state.urls = urls
+        st.session_state.selected_urls = [False] * len(urls)
 
-if 'selected_urls' not in st.session_state:
-    # Assuming the same length as URLs
-    st.session_state.selected_urls = [False] * len(st.session_state.urls)  # Initialize with False (unchecked)
 
 if st.session_state.urls:
     for i, url in enumerate(st.session_state.urls):
