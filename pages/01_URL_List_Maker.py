@@ -115,9 +115,9 @@ selected_urls = []
 
 # 検索ボタン
 if st.button("Search"):
-    # クロール処理
-    with st.spinner('Crawling... This may take minutes'):
-        urls = crawl_web_pages(start_url, url_pattern, max_depth)
+  # クロール処理
+  with st.spinner('Crawling... This may take minutes'):
+      urls = crawl_web_pages(start_url, url_pattern, max_depth)
   if urls:
     st.subheader('results:')
     selected_urls = st.multiselect('ダウンロードするURLを選択してください', urls)
