@@ -122,9 +122,9 @@ with st.form('crawl'):
 if st.session_state.urls:
     for i, url in enumerate(st.session_state.urls):
         title = get_title_from_url(url)
-        st.write(title)
+        st.text(title)
         selected = st.checkbox(url, key=f"checkbox_{i}", value=True)
         st.session_state.selected_urls[i] = selected
-        # st.write(' ')
+        st.markdown('---')
     selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
     download_urls(selected_urls)
