@@ -121,15 +121,16 @@ if st.button("Search"):
 
   # 結果表示
   st.subheader('results:')
-
   if urls:
+    # セッション状態の初期化
+    if "checked_urls" not in st.session_state:
+      st.session_state.checked_urls = {url: True for url in urls}
     for url in urls:
       title = get_title_from_url(url)
       st.write(title)
-      checked_urls[url] = st.checkbox(url, value=True)
-    for url, checked in checked_urls.items():
-      if checked:
-          selected_urls.append(url)
+      st.session_state.checked_urls[url] = st.checkbox(url, value=st.session_state.checked_urls[url])
+
+    selected_urls = [url for url, checked in st.session_state.checked_urls.items() if checked]
 
     txt_data = "\n".join(selected_urls)
     st.download_button(
