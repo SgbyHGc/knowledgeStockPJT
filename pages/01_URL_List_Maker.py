@@ -103,7 +103,7 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 #     urls = crawl_web_pages(start_url, url_pattern, max_depth)
 urls = ["aaa","bbb"]
 if urls:
-    if "selected_urls" not in st.session_state:  # selected_urlsを初期化
+    if "selected_urls" not in st.session_state:
         st.session_state.selected_urls = []
 
     selected_urls = st.multiselect("URLを選択", urls, key="selected_urls", use_container_width=True)
