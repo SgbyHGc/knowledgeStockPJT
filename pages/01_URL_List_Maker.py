@@ -9,32 +9,10 @@ import io
 
 @st.cache
 def crawl_web_pages(url, pattern, max_depth=2):
-    """
-    指定されたURLからウェブページをクロールし、特定のパターンに一致する一意のリンクを抽出します。
-
-    この関数は、指定されたURLから開始し、指定された深さまでリンクされたページを探索し、
-    提供されたパターンに一致し、ウェブページ（HTMLドキュメント）につながるURLのみを収集します。
-    無限ループを防ぐために、同じURLへの再アクセスは避けます。
-
-    Args:
-        url: クロールを開始するURL。
-        pattern: URLで一致させるパターンを表す文字列（例： "/blog/"）。
-        max_depth: クロールする最大深度。
-
-    Returns:
-        パターンに一致し、ウェブページにつながる一意のURLのリスト。
-    """
     visited_urls = set()
     urls = []
 
     def crawl(url, depth):
-        """
-        再帰的なクロールを実行します。
-
-        Args:
-            url: クロールするURL。
-            depth: 現在のクロールの深度。
-        """
         if depth > max_depth:
             return
 
@@ -104,7 +82,7 @@ if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
     if urls:
         selected_urls = []
-        with st.form():
+        with st.form('my form'):
             for url in urls:
                 selected_urls.append(st.checkbox(url))
         if st.form_submit_button('test'):
