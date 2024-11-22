@@ -86,9 +86,10 @@ with st.form('crawl'):
     submit_crawl = st.form_submit_button('Crawl')
     if submit_crawl:
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
-        
+        st.session_state.urls = urls
+
 with st.form('download'):
-    for url in urls:
+    for url in st.session_state.urls:
         selected_urls.append(st.checkbox(url))
     submit_download = st.form_submit_button('test')
     if submit_download:
