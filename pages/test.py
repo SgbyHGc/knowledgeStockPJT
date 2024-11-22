@@ -2,15 +2,16 @@ import streamlit as st
 import os
 import base64
 
-if st.button("Search"):
-    urls = crawl_web_pages(start_url, url_pattern, max_depth)
+import streamlit as st
 
-    if urls:
-        selected_urls = []  # フォームの外でリストを初期化
-        for url in urls:
-            checked = st.checkbox(url, key=url) # st.form を使わない
-            if checked:
-                selected_urls.append(url)
+if "checkboxes" not in st.session_state:
+    st.session_state.checkboxes = {}
 
-        if st.button("ダウンロード"): # 別のボタンでダウンロード処理を実行
-            download_selected_urls(selected_urls)
+options = ["Option 1", "Option 2", "Option 3"]
+
+for i, option in enumerate(options):
+    st.checkbox(option, key=f"checkbox_{i}", value=st.session_state.checkboxes.get(f"checkbox_{i}", False))
+
+if st.button("Submit"):
+    selected_options = [option for i, option in enumerate(options) if st.session_state[f"checkbox_{i}"]]
+    st.write(f"Selected options: {selected_options}")
