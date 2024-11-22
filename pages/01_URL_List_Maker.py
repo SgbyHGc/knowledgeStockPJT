@@ -131,24 +131,24 @@ if st.button("Search"):
     with st.spinner('Crawling... This may take minutes'):
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
-if urls is not None:
-    st.subheader('results:')
 
-    # チェックボックスの状態を st.session_state に保存
-    for i, url in enumerate(urls):
-        key = f"checkbox_{i}_{url}"
+st.subheader('results:')
 
-        if key not in st.session_state:
-            st.session_state[key] = False
+# チェックボックスの状態を st.session_state に保存
+for i, url in enumerate(urls):
+    key = f"checkbox_{i}_{url}"
 
-        if st.checkbox(url, key=key, value=st.session_state[key]):
-            st.session_state[key] = True
-            if url not in st.session_state.selected_urls:
-                st.session_state.selected_urls.append(url)
-        else:
-            st.session_state[key] = False
-            if url in st.session_state.selected_urls:
-                st.session_state.selected_urls.remove(url)
+    if key not in st.session_state:
+        st.session_state[key] = False
 
-    download_selected_urls(st.session_state.selected_urls)
+    if st.checkbox(url, key=key, value=st.session_state[key]):
+        st.session_state[key] = True
+        if url not in st.session_state.selected_urls:
+            st.session_state.selected_urls.append(url)
+    else:
+        st.session_state[key] = False
+        if url in st.session_state.selected_urls:
+            st.session_state.selected_urls.remove(url)
+
+download_selected_urls(st.session_state.selected_urls)
     
