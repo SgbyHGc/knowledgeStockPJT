@@ -121,18 +121,18 @@ if st.button("Search"):
 
     # 結果表示
     st.subheader('results:')
-    if urls:
-      selected_urls = st.multiselect('ダウンロードするURLを選択してください', urls)
-      txt_data = "\n".join(selected_urls)
-      st.download_button(
-          label="Download txt file",
-          data=txt_data,
-          file_name="urls.txt",
-          mime="text/plain",
-      )
+if urls:
+  selected_urls = st.multiselect('ダウンロードするURLを選択してください', urls)
+  txt_data = "\n".join(selected_urls)
+  st.download_button(
+      label="Download txt file",
+      data=txt_data,
+      file_name="urls.txt",
+      mime="text/plain",
+  )
 
-    else:
-        st.write('一致するURLは見つかりませんでした。')
+else:
+    st.write('一致するURLは見つかりませんでした。')
 
 
     
