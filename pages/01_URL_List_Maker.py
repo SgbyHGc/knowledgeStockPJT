@@ -95,3 +95,5 @@ with st.form('download'):
             st.session_state.selected_urls[i] = selected
 
     submit_download = st.form_submit_button('Download')
+    if submit_download:
+        download_urls(st.session_state.selected_urls)
