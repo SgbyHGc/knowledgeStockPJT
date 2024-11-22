@@ -131,5 +131,4 @@ if st.session_state.visibility:
   for url in urls:
     if st.checkbox(url):
       selected_urls.append(url)
-
   download_selected_urls(selected_urls)
