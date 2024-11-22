@@ -87,21 +87,20 @@ URLのページに記載されているリンクを辿ってURLのリストを�
 深度は、リンク先のリンクの深さを示します。リンク先のリンク先のリンクまで収集する場合は3。
 """)
 st.markdown('---')
-
-# セッション状態の初期化
 if 'urls' not in st.session_state:
     st.session_state.urls = []
 if 'selected_urls' not in st.session_state:
     st.session_state.selected_urls = []
 
-# クローリングフォーム
 with st.form('crawl'):
-    # ... (既存のフォームのコード)
+    start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/search/')
+    url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
+    max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
+    submit_crawl = st.form_submit_button('Crawl')
     if submit_crawl:
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
         st.session_state.urls = urls
 
-# チェックボックスとダウンロードボタン
 if st.session_state.urls:
     for i, url in enumerate(st.session_state.urls):
         selected = st.checkbox(url, key=f"checkbox_{i}")
