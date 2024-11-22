@@ -95,7 +95,7 @@ def get_title_from_url(url):
     print(f"Failed to extract the title: {e}")
     return None
 
-def download_selected_urls(urls):
+def download_urls(urls):
     if not urls:
         st.warning("Please select at least one URL.")
         return
@@ -139,7 +139,8 @@ if st.button("Search"):
                 if checked:
                     selected_urls.append(url)
 
-            submitted = st.form_submit_button("選択したURLをダウンロード") # Submitボタンをフォーム内に移動
-            if submitted: # Submitボタンが押された後に処理を実行
-                st.session_state.checked_urls = set(selected_urls) # session_stateを更新
+            submitted = st.form_submit_button("選択したURLをダウンロード")
+            if submitted:
+                st.session_state.checked_urls = set(selected_urls)
                 download_selected_urls(selected_urls)
+                st.experimental_rerun()  # セッション状態の更新を強制
