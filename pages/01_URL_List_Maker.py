@@ -137,10 +137,9 @@ if st.button("Search"):
             for url in urls:
               
                 checked = st.checkbox(url, key=url, value=(url in st.session_state.checked_urls))
-                st.write(checked)
-                st.write(url)
                 if checked:  # チェックされている場合のみURLを追加
                     selected_urls.append(url)
+                    st.write("test")
 
             submitted = st.form_submit_button("選択したURLをダウンロード")
 
