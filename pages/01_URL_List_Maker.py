@@ -110,8 +110,7 @@ st.markdown('---')
 start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/')
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
-checked_urls = {}
-selected_urls = []
+
 
 # 検索ボタン
 if st.button("Search"):
@@ -121,18 +120,18 @@ if st.button("Search"):
       
       if urls:
         st.subheader('results:')
+        selected_urls = []
         for url in urls:
-          checked_urls[url] = st.checkbox(url)
-        if checked_urls:
-          selected_urls = [url for url, checked in checked_urls.items() if checked]
-          if selected_urls:
-            txt_data = "\n".join(selected_urls)
-            st.download_button(
-                label="Download txt file",
-                data=txt_data,
-                file_name="urls.txt",
-                mime="text/plain",
-            )
+            if st.checkbox(url):
+                selected_urls.append(url)
+        if selected_urls:
+          txt_data = "\n".join(selected_urls)
+          st.download_button(
+              label="Download txt file",
+              data=txt_data,
+              file_name="urls.txt",
+              mime="text/plain",
+          )
 
 
 
