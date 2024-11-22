@@ -108,8 +108,5 @@ if st.session_state.urls:
     for i, url in enumerate(st.session_state.urls):
         selected = st.checkbox(url, key=f"checkbox_{i}")
         st.session_state.selected_urls[i] = selected
-
-    # ダウンロードボタンをフォームの外に配置
-    if st.button('Download Selected URLs'):
-        selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
-        download_urls(selected_urls)
+    selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
+    download_urls(selected_urls)
