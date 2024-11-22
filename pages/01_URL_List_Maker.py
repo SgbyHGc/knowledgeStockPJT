@@ -7,6 +7,7 @@ import hashlib
 import time
 import io
 
+@st.cache
 def crawl_web_pages(url, pattern, max_depth=2):
     """
     指定されたURLからウェブページをクロールし、特定のパターンに一致する一意のリンクを抽出します。
