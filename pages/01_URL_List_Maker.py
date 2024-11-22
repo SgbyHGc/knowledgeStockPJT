@@ -103,7 +103,7 @@ if "url_states" not in st.session_state:
     st.session_state.url_states = {}
 
 if st.button("Search"):
-    # ... (crawl_web_pagesの実行)
+    urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
     if urls:
         selected_urls = []
