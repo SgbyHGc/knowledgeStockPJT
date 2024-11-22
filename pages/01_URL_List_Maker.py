@@ -122,17 +122,14 @@ if st.button("Search"):
     # 結果表示
     st.subheader('results:')
     if urls:
-      for url in urls:
-        checked_urls[url] = st.checkbox(url)
-      selected_urls = [url for url, checked in checked_urls.items() if checked]
-      if selected_urls:
-          txt_data = "\n".join(selected_urls)
-          st.download_button(
-              label="Download txt file",
-              data=txt_data,
-              file_name="urls.txt",
-              mime="text/plain",
-          )
+      selected_urls = st.multiselect(urls)
+      txt_data = "\n".join(selected_urls)
+      st.download_button(
+          label="Download txt file",
+          data=txt_data,
+          file_name="urls.txt",
+          mime="text/plain",
+      )
 
     else:
         st.write('一致するURLは見つかりませんでした。')
