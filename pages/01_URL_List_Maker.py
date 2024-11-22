@@ -87,8 +87,7 @@ def download_urls(urls):
 def handle_url_selection(urls):
     """URL選択とダウンロード処理を扱う補助関数"""
     selected_urls = st.multiselect("URLを選択", urls, key="multiselect_key")
-    if selected_urls:
-        download_urls(selected_urls)
+    download_urls(selected_urls)
 
 # Streamlitアプリのタイトルを設定
 st.title("URLリスト作成 📝")
