@@ -74,8 +74,7 @@ def crawl_web_pages(url, pattern, max_depth=2):
     return urls
 
 
-def download_urls(urls):
-    selected_urls = st.multiselect("URLを選択", urls, key="multiselect_key")
+def download_urls(selected_urls):
     data = "\n".join(selected_urls).encode('utf-8')
     filename = "selected_urls.txt"
     st.download_button(
@@ -104,5 +103,6 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
     if urls:
-        download_urls(urls)
+        for url in urls:
+          st.checkbox(url)
 
