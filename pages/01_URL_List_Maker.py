@@ -95,6 +95,17 @@ def get_title_from_url(url):
     print(f"Failed to extract the title: {e}")
     return None
 
+def download_selected_urls(urls):
+    if not urls:
+        st.warning("Please select at least one URL.")
+        return
+    txt_data = "\n".join(urls)
+    st.download_button(
+        label="Download selected URLs",
+        data=txt_data,
+        file_name="urls.txt",
+        mime="text/plain",
+    )
 
 # Streamlitアプリのタイトルを設定
 st.title("URLリスト作成 📝")
@@ -117,16 +128,10 @@ if st.button("Search"):
   # クロール処理
   with st.spinner('Crawling... This may take minutes'):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
-      
-st.subheader('results:')
-selected_urls = st.multiselect('', urls, urls)
-txt_data = "\n".join(selected_urls)
-st.download_button(
-    label="Download txt file",
-    data=txt_data,
-    file_name="urls.txt",
-    mime="text/plain",
-)
+  if urls is not None:
+    st.subheader('results:')
+    selected_urls = st.multiselect('', urls, urls)
+    download_selected_urls(selected_urls)
 
 
 
