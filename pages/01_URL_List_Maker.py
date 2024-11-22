@@ -103,20 +103,16 @@ if "url_states" not in st.session_state:
     st.session_state.url_states = {}
 
 if st.button("Search"):
-    urls = crawl_web_pages(start_url, url_pattern, max_depth)
+    # ... (crawl_web_pagesの実行)
 
     if urls:
         selected_urls = []
         for url in urls:
-            # URLをハッシュ化して安全なキーを生成
-            key = f"button_{hashlib.sha256(url.encode()).hexdigest()}"  # 変更点
-            is_selected = st.session_state.url_states.get(key, False)
-            if st.button(url, key=key):  # 変更点
-                is_selected = not is_selected
-            st.session_state.url_states[key] = is_selected
-
+            key = f"checkbox_{hashlib.sha256(url.encode()).hexdigest()}"
+            is_selected = st.checkbox(url, key=key)  # st.checkboxを直接使用
             if is_selected:
                 selected_urls.append(url)
+
 
         if st.button("選択したURLをダウンロード", use_container_width=True):
             if selected_urls:
