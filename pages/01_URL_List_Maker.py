@@ -126,9 +126,9 @@ if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
     st.session_state.visibility = True
 
-if st.session_state.visibility:
-  selected_urls = []
-  for url in urls:
-    if st.checkbox(url):
-      selected_urls.append(url)
-  download_selected_urls(selected_urls)
+    if st.session_state.visibility:
+      selected_urls = []
+      for url in urls:
+        if st.checkbox(url):
+          selected_urls.append(url)
+      download_selected_urls(selected_urls)
