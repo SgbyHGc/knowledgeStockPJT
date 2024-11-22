@@ -78,14 +78,14 @@ start_url = st.text_input('URLを入力してください', value='https://www.t
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
-if st.button("Search"):
-    urls = crawl_web_pages(start_url, url_pattern, max_depth)
-    urls = ["aaa","bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"]
-    selected_urls = []
-    with st.form('my form'):
-        for url in urls:
-            selected_urls.append(st.checkbox(url))
-        submit = st.form_submit_button('test')
-        if submit:
-            st.write(selected_urls)
+
+urls = crawl_web_pages(start_url, url_pattern, max_depth)
+urls = ["aaa","bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"]
+selected_urls = []
+with st.form('my form'):
+    for url in urls:
+        selected_urls.append(st.checkbox(url))
+    submit = st.form_submit_button('test')
+    if submit:
+        st.write(selected_urls)
 
