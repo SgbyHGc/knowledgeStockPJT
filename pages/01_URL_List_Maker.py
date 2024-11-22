@@ -126,7 +126,7 @@ if st.button("Search"):
       if st.checkbox(url, key=f"checkbox_{i}"):
         selected_urls.append(url)
     if selected_urls:
-      txt_data = "\n".join(urls)
+      txt_data = "\n".join(selected_urls)
       st.download_button(
         label="Download selected URLs",
         data=txt_data,
