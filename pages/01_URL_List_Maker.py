@@ -116,19 +116,13 @@ start_url = st.text_input('URLを入力してください', value='https://www.t
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
-# 検索ボタン
-
-if "visibility" not in st.session_state:
-  st.session_state.visibility = False
 
 if st.button("Search"): 
   with st.spinner('Crawling... This may take minutes'):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
-    st.session_state.visibility = True
-
-    if st.session_state.visibility:
-      selected_urls = []
-      for url in urls:
-        if st.checkbox(url):
-          selected_urls.append(url)
-      download_selected_urls(selected_urls)
+  if urls:
+    selected_urls = []
+    for url in urls:
+      if st.checkbox(url):
+        selected_urls.append(url)
+    download_selected_urls(selected_urls)
