@@ -125,25 +125,26 @@ start_url = st.text_input('URLを入力してください', value='https://www.t
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
+if "checked_urls" not in st.session_state:
+    st.session_state.checked_urls = set()
+
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
     if urls:
-        # デフォルトで全てのURLを選択済みにする
-        if "selected_urls" not in st.session_state or st.session_state.get("last_urls") != urls:
-            st.session_state.selected_urls = urls
-            st.session_state.last_urls = urls # 最後に表示したURLリストを保存
+        selected_urls = set(st.session_state.checked_urls)  # selected_urls を set に変更
 
-        selected_urls = st.multiselect(
-            "ダウンロードするURLを選択してください:",
-            urls,
-            default=st.session_state.selected_urls, # デフォルト値を設定
-        )
+        for url in urls:
+            # ボタンのkeyを一意にする
+            key = f"button_{url}"
+            if st.button(url, key=key):
+                if url in selected_urls:
+                    selected_urls.remove(url)
+                else:
+                    selected_urls.add(url)
+
+            st.session_state.checked_urls = list(selected_urls)  # session_stateをリストで更新
 
 
-        col1, col2 = st.columns([1, 4]) # ボタンの横幅を広げるためにカラムを使用
-        with col1:
-           pass # 空のカラム
-        with col2:
-            if st.button("選択したURLをダウンロード", use_container_width=True):  # use_container_width=True を追加
-                download_selected_urls(selected_urls)
+        if st.button("選択したURLをダウンロード", use_container_width=True):
+            download_selected_urls(list(selected_urls)) # selected_urls をリストに変換して渡す
