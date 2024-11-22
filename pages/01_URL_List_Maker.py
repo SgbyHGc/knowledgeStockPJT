@@ -72,6 +72,29 @@ def crawl_web_pages(url, pattern, max_depth=2):
   crawl(url, 1)
   return urls
 
+def get_title_from_url(url):
+  """
+  Fetches the title of a web page given its URL.
+
+  Args:
+    url: The URL of the web page.
+
+  Returns:
+    The title of the web page (str).
+  """
+  try:
+    response = requests.get(url)
+    response.raise_for_status()  # Raise an exception for error status codes
+    soup = BeautifulSoup(response.content, "html.parser")
+    title = soup.find("title").text
+    return title
+  except requests.exceptions.RequestException as e:
+    print(f"Failed to fetch the page: {e}")
+    return None
+  except Exception as e:
+    print(f"Failed to extract the title: {e}")
+    return None
+
 
 # Streamlitアプリのタイトルを設定
 st.title("URLリスト作成 📝")
@@ -89,6 +112,7 @@ url_pattern = st.text_input('キーワードを入力してください', value=
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 checked_urls = {}
 selected_urls = []
+
 # 検索ボタン
 if st.button("Search"):
   # クロール処理
@@ -100,8 +124,9 @@ if st.button("Search"):
 
   if urls:
     for url in urls:
-      st.write(url)
-      checked_urls[url] = st.checkbox(url)
+      title = get_title_from_url(url)
+      st.wrtie(title)
+      checked_urls[url] = st.checkbox(url, value=True)
     for url, checked in checked_urls.items():
       if checked:
           selected_urls.append(url)
