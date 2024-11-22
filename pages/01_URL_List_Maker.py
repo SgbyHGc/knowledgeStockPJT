@@ -97,5 +97,6 @@ with st.form('download'):
 
     submit_download = st.form_submit_button('Download')
     if submit_download:
+        st.write(st.session_state.selected_urls)
         selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
         download_urls(selected_urls)
