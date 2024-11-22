@@ -106,7 +106,7 @@ if urls:
     if "selected_urls" not in st.session_state:  # selected_urlsを初期化
         st.session_state.selected_urls = []
 
-    selected_urls = st.multiselect("URLを選択", urls, key="selected_urls") # multiselectを使用 
+    selected_urls = st.multiselect("URLを選択", urls, key="selected_urls", use_container_width=True)
     if selected_urls:
         download_urls(selected_urls)
     else:
