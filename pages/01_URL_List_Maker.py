@@ -52,15 +52,30 @@ def crawl_web_pages(url, pattern, max_depth=2):
 
 
 def download_urls(selected_urls):
-    st.write(selected_urls)
-    data = "\n".join(selected_urls).encode('utf-8')
-    filename = "selected_urls.txt"
-    st.download_button(
-        label="選択したURLをダウンロード",
-        data=data,
-        file_name=filename,
-        mime="text/plain",
-    )
+    """
+    Download selected URLs as a text file.
+
+    Args:
+        selected_urls: List of selected URLs.
+    """
+
+    if not selected_urls:
+        st.error("No URLs selected for download.")
+        return
+
+    # Join URLs with newlines
+    data = "\n".join(selected_urls)
+
+    # Download button within a form (assuming it's called after submit)
+    try:
+        st.download_button(
+            label="選択したURLをダウンロード",
+            data=data.encode('utf-8'),
+            file_name="selected_urls.txt",
+            mime="text/plain"
+        )
+    except Exception as e:
+        st.error(f"ダウンロード中にエラーが発生しました: {e}")
 
 
 # Streamlitアプリのタイトルを設定
