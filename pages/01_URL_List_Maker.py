@@ -125,22 +125,25 @@ start_url = st.text_input('URLを入力してください', value='https://www.t
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
-if "checked_urls" not in st.session_state:
-    st.session_state.checked_urls = set()
-
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
     if urls:
-        selected_urls = []
-        for i, url in enumerate(urls):
-            # st.session_state に直接 checkbox の状態を保存
-            st.session_state[f"checkbox_{i}"] = st.checkbox(url, key=f"checkbox_{i}", value=(url in st.session_state.checked_urls))
-            if st.session_state[f"checkbox_{i}"]:
-                selected_urls.append(url)
+        # デフォルトで全てのURLを選択済みにする
+        if "selected_urls" not in st.session_state or st.session_state.get("last_urls") != urls:
+            st.session_state.selected_urls = urls
+            st.session_state.last_urls = urls # 最後に表示したURLリストを保存
+
+        selected_urls = st.multiselect(
+            "ダウンロードするURLを選択してください:",
+            urls,
+            default=st.session_state.selected_urls, # デフォルト値を設定
+        )
 
 
-        if st.button("選択したURLをダウンロード"):  # ダウンロードボタンをフォームの外に配置
-            selected_urls = [url for i, url in enumerate(urls) if st.session_state.get(f"checkbox_{i}", False)]
-            st.session_state.checked_urls = set(selected_urls)
-            download_selected_urls(selected_urls)
+        col1, col2 = st.columns([1, 4]) # ボタンの横幅を広げるためにカラムを使用
+        with col1:
+           pass # 空のカラム
+        with col2:
+            if st.button("選択したURLをダウンロード", use_container_width=True):  # use_container_width=True を追加
+                download_selected_urls(selected_urls)
