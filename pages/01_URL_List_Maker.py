@@ -104,9 +104,19 @@ st.markdown('---')
 start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/')
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
-urls = ['aaa','bbb', 'cccccccccccccccccccccccccccccccccc']
+
+
+if 'result' not in st.session_state:
+    st.session_state.result = None
+
 if st.button("Search"):
-    urls = crawl_web_pages(start_url, url_pattern, max_depth)
-    if urls:
-        handle_url_selection(urls)
+    if st.session_state.result is not None:
+        st.write("前回の計算結果:", st.session_state.result)
+    st.session_state.result = crawl_web_pages(start_url, url_pattern, max_depth)
+    st.write("関数1の結果:", st.session_state.result)
+if urls:
+    if st.session_state.result is None:
+        st.write("関数1の結果がまだありません。")
+    else:
+        download_urls(st.session_state.result)
 
