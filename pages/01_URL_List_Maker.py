@@ -93,9 +93,8 @@ with st.form('download'):
         for i, url in enumerate(st.session_state.urls):
             # チェックボックスにユニークなキーを割り当てる
             selected = st.checkbox(url, key=f"checkbox_{i}")
-            st.write(selected)
             st.session_state.selected_urls[i] = selected
-
+            st.write(st.session_state.selected_urls)
     submit_download = st.form_submit_button('Download')
     if submit_download:
         st.write(st.session_state.selected_urls)
