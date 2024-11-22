@@ -120,7 +120,7 @@ if st.button("Search"):
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
     # 結果表示
-    st.subheader('results:')
+st.subheader('results:')
 if urls:
   selected_urls = st.multiselect('ダウンロードするURLを選択してください', urls)
   txt_data = "\n".join(selected_urls)
@@ -132,7 +132,7 @@ if urls:
   )
 
 else:
-    st.write('一致するURLは見つかりませんでした。')
+  st.write('一致するURLは見つかりませんでした。')
 
 
     
