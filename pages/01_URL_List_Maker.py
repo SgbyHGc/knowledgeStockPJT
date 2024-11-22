@@ -88,7 +88,7 @@ with st.form('download'):
         for i, url in enumerate(st.session_state.urls):
             selected = st.checkbox(url, key=f"checkbox_{i}")  # チェックボックスにユニークなキーを設定
             st.session_state.selected_urls[i] = selected  # チェックボックスの状態を更新
-        submit_download = st.form_submit_button('Download')
-        if submit_download:
-            selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
-            st.write("選択されたURL:", selected_urls)
+    submit_download = st.form_submit_button('Download')
+    if submit_download:
+        selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
+        st.write("選択されたURL:", selected_urls)
