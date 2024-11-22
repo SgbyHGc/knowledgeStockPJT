@@ -84,11 +84,11 @@ with st.form('crawl'):
         st.session_state.urls = urls
 
 with st.form('download'):
-    if st.session_state.urls is not None:
-        selected_urls = []
-        for url in st.session_state.urls:
-            selected_urls.append(st.checkbox(url))
-        submit_download = st.form_submit_button('test')
-        if submit_download:
-            st.write(selected_urls)
+    # if st.session_state.urls is not None:
+    selected_urls = []
+    for url in st.session_state.urls:
+        selected_urls.append(st.checkbox(url))
+    submit_download = st.form_submit_button('test')
+    if submit_download:
+        st.write(selected_urls)
 
