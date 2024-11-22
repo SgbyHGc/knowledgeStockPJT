@@ -116,9 +116,6 @@ URLのページに記載されているリンクを辿ってURLのリストを�
 深度は、リンク先のリンクの深さを示します。リンク先のリンク先のリンクまで収集する場合は3。
 """)
 st.markdown('---')
-# st.session_state を初期化
-if 'selected_urls' not in st.session_state:
-    st.session_state.selected_urls = []
 
 # Streamlitの入力フォーム
 start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/')
