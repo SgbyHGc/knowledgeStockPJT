@@ -135,7 +135,10 @@ if st.button("Search"):
         with st.form("url_form"):
             selected_urls = []
             for url in urls:
+              
                 checked = st.checkbox(url, key=url, value=(url in st.session_state.checked_urls))
+                st.write(checked)
+                st.write(url)
                 if checked:  # チェックされている場合のみURLを追加
                     selected_urls.append(url)
 
