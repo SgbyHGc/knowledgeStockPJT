@@ -79,7 +79,8 @@ url_pattern = st.text_input('キーワードを入力してください', value=
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
 if st.button("Search"):
-    urls = crawl_web_pages(start_url, url_pattern, max_depth)
+    # urls = crawl_web_pages(start_url, url_pattern, max_depth)
+    urls = ["aaa","bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"]
     if urls:
         selected_urls = []
         with st.form('my form'):
