@@ -99,13 +99,7 @@ def download_selected_urls(urls):
     if not urls:
         st.warning("Please select at least one URL.")
         return
-    txt_data = "\n".join(urls)
-    st.download_button(
-        label="Download selected URLs",
-        data=txt_data,
-        file_name="urls.txt",
-        mime="text/plain",
-    )
+
 
 # Streamlitアプリのタイトルを設定
 st.title("URLリスト作成 📝")
@@ -133,5 +127,11 @@ if st.button("Search"):
           if st.checkbox(url, key=f"checkbox_{i}"):
               selected_urls.append(url)
       if selected_urls:
-        download_selected_urls(selected_urls)  # st.session_state からURLを取得
+        txt_data = "\n".join(urls)
+        st.download_button(
+            label="Download selected URLs",
+            data=txt_data,
+            file_name="urls.txt",
+            mime="text/plain",
+        )
     
