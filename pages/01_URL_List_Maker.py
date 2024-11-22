@@ -120,7 +120,6 @@ if st.button("Search"):
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
 st.subheader('results:')
-
 selected_urls = st.multiselect('ダウンロードするURLを選択してください', urls)
 txt_data = "\n".join(selected_urls)
 st.download_button(
