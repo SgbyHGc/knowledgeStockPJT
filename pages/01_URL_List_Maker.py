@@ -132,15 +132,14 @@ if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
     if urls:
-        with st.form("url_form"):  # st.form で囲む
+        with st.form("url_form"):
             selected_urls = []
             for url in urls:
-                checked = st.checkbox(url, key=url, value=(url in st.session_state.checked_urls))  # key=url を追加
-                if checked:
+                checked = st.checkbox(url, key=url, value=(url in st.session_state.checked_urls))
+                if checked:  # チェックされている場合のみURLを追加
                     selected_urls.append(url)
 
             submitted = st.form_submit_button("選択したURLをダウンロード")
-            st.write(selected_urls)
             if submitted:
                 st.session_state.checked_urls = set(selected_urls)
                 download_selected_urls(selected_urls)
