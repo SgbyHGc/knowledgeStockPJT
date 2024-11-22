@@ -120,7 +120,7 @@ if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
   if "checked_urls" not in st.session_state:
-  st.session_state.checked_urls = {url: True for url in urls}
+    st.session_state.checked_urls = {url: True for url in urls}
   # 結果表示
   st.subheader('results:')
   if urls:
