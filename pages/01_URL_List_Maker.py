@@ -115,23 +115,23 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 # 検索ボタン
 if st.button("Search"):
   # クロール処理
-  with st.spinner('Crawling... This may take minutes'):
-      urls = crawl_web_pages(start_url, url_pattern, max_depth)
+  # with st.spinner('Crawling... This may take minutes'):
+  urls = crawl_web_pages(start_url, url_pattern, max_depth)
       
-if urls is not None:
-  st.subheader('results:')
-  selected_urls = []
-  for url in urls:
-      if st.checkbox(url):
-          selected_urls.append(url)
-if selected_urls is not None:
-  txt_data = "\n".join(selected_urls)
-  st.download_button(
-      label="Download txt file",
-      data=txt_data,
-      file_name="urls.txt",
-      mime="text/plain",
-  )
+  if urls is not None:
+    st.subheader('results:')
+    selected_urls = []
+    for url in urls:
+        if st.checkbox(url):
+            selected_urls.append(url)
+  if selected_urls is not None:
+    txt_data = "\n".join(selected_urls)
+    st.download_button(
+        label="Download txt file",
+        data=txt_data,
+        file_name="urls.txt",
+        mime="text/plain",
+    )
 
 
 
