@@ -96,9 +96,11 @@ def download_urls(selected_urls):
 # Streamlitアプリのタイトルを設定
 st.title("URLリスト作成 📝")
 st.markdown('---')
-st.markdown("URLのページに記載されているリンクを辿ってURLのリストを作成します。")
-st.markdown("指定したキーワードが含まれるURLのみをリスト化します。サブディレクトリなどを指定してください。")
-st.markdown("深度は、リンク先のリンクの深さを示します。リンク先のリンク先のリンクまで収集する場合は3。")
+st.markdown("""
+URLのページに記載されているリンクを辿ってURLのリストを作成します。\n
+指定したキーワードが含まれるURLのみをリスト化します。サブディレクトリなどを指定してください。
+深度は、リンク先のリンクの深さを示します。リンク先のリンク先のリンクまで収集する場合は3。
+""")
 st.markdown('---')
 
 if 'urls' not in st.session_state:
