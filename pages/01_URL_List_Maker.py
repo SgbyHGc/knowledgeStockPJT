@@ -7,6 +7,7 @@ import hashlib
 import time
 import io
 
+@st.cache_data
 def crawl_web_pages(url, pattern, max_depth=2):
     """
     指定されたURLからウェブページをクロールし、特定のパターンに一致する一意のリンクを抽出します。
@@ -109,10 +110,9 @@ if st.button("Search"):
         selected_urls = []
         for url in urls:
             key = f"checkbox_{hashlib.sha256(url.encode()).hexdigest()}"
-            is_selected = st.checkbox(url, key=key)  # st.checkboxを直接使用
+            is_selected = st.checkbox(url, key=key)
             if is_selected:
                 selected_urls.append(url)
-
 
         if st.button("選択したURLをダウンロード", use_container_width=True):
             if selected_urls:
