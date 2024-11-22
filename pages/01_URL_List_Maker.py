@@ -125,12 +125,11 @@ if st.button("Search"):
     for i, url in enumerate(urls):
       if st.checkbox(url, key=f"checkbox_{i}"):
         selected_urls.append(url)
-    if selected_urls:
-      txt_data = "\n".join(selected_urls)
-      st.download_button(
-        label="Download selected URLs",
-        data=txt_data,
-        file_name="urls.txt",
-        mime="text/plain",
-      )
+    txt_data = "\n".join(selected_urls)
+    st.download_button(
+      label="Download selected URLs",
+      data=txt_data,
+      file_name="urls.txt",
+      mime="text/plain",
+    )
   
