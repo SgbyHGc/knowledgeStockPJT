@@ -106,8 +106,7 @@ if st.button("Search"):
         multiselect_placeholder = st.empty() # プレースホルダーを作成
         selected_urls = multiselect_placeholder.multiselect("URLを選択", urls, key="multiselect_key")
 
-        if st.button("選択したURLをダウンロード", use_container_width=True):
-          if selected_urls:
-              download_urls(selected_urls)
-          else:
-              st.warning("URLが選択されていません。")
+        if selected_urls:
+            download_urls(selected_urls)
+        else:
+            st.warning("URLが選択されていません。")
