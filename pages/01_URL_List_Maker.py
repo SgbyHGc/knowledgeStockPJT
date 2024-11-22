@@ -124,21 +124,18 @@ if st.button("Search"):
     if urls:
       for url in urls:
         checked_urls[url] = st.checkbox(url)
+      selected_urls = [url for url, checked in checked_urls.items() if checked]
+      if selected_urls:
+          txt_data = "\n".join(selected_urls)
+          st.download_button(
+              label="Download txt file",
+              data=txt_data,
+              file_name="urls.txt",
+              mime="text/plain",
+          )
+
     else:
         st.write('一致するURLは見つかりませんでした。')
-
-if st.button("Download"):
-    selected_urls = [url for url, checked in checked_urls.items() if checked]
-    if selected_urls:
-        txt_data = "\n".join(selected_urls)
-        st.download_button(
-            label="Download txt file",
-            data=txt_data,
-            file_name="urls.txt",
-            mime="text/plain",
-        )
-    else:
-        st.write("ダウンロードするURLを選択してください。")
 
 
     
