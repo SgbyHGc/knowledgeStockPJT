@@ -7,7 +7,6 @@ import hashlib
 import time
 import io
 
-@st.cache
 def crawl_web_pages(url, pattern, max_depth=2):
     visited_urls = set()
     urls = []
