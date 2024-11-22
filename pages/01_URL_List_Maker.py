@@ -83,6 +83,11 @@ def download_urls(urls):
         mime="text/plain",
     )
 
+def handle_url_selection(urls):
+    """URL選択とダウンロード処理を扱う補助関数"""
+    selected_urls = st.multiselect("URLを選択", urls, key="multiselect_key")
+    if selected_urls:
+        download_urls(selected_urls)
 
 # Streamlitアプリのタイトルを設定
 st.title("URLリスト作成 📝")
@@ -101,10 +106,6 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 urls = ['aaa','bbb', 'cccccccccccccccccccccccccccccccccc']
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
-
     if urls:
-        selected_urls = st.multiselect("URLを選択", urls, key="multiselect_key")
-
-        if selected_urls:
-            download_urls(selected_urls)
+        handle_url_selection(urls)
 
