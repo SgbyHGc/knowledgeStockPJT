@@ -134,20 +134,22 @@ url_pattern = st.text_input('キーワードを入力してください', value=
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
 if "checked_urls" not in st.session_state:
-    st.session_state.checked_urls = []
+    st.session_state.checked_urls = set()  # setを使う方が効率的
+
 
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
     if urls:
         selected_urls = []
         for url in urls:
-            # st.session_state を使ってチェックボックスの状態を管理
-            is_checked = st.checkbox(url, value=(url in st.session_state.checked_urls))
-            if is_checked:
+            # チェックボックスの状態を個別に管理
+            checked = st.checkbox(url, value=(url in st.session_state.checked_urls))
+
+            if checked:  # チェックされたら追加
                 selected_urls.append(url)
-                if url not in st.session_state.checked_urls:
-                  st.session_state.checked_urls.append(url)
-            elif url in st.session_state.checked_urls:  # チェックが外された場合
-                  st.session_state.checked_urls.remove(url)
+                st.session_state.checked_urls.add(url)
+            elif url in st.session_state.checked_urls:  # チェックが外されたら削除
+                st.session_state.checked_urls.remove(url)
+
 
         download_selected_urls(selected_urls)
