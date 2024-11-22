@@ -84,13 +84,13 @@ with st.form('crawl'):
     url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
     max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
     submit_crawl = st.form_submit_button('Crawl')
-    if submit:
+    if submit_crawl:
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
         with st.form('download'):
             for url in urls:
                 selected_urls.append(st.checkbox(url))
-            submit = st.form_submit_button('test')
-            if submit:
+            submit_download = st.form_submit_button('test')
+            if submit_download:
                 st.write(selected_urls)
 
