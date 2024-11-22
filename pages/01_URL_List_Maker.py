@@ -118,18 +118,20 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 
 # 検索ボタン
 if st.button("Search"):
-  with st.spinner('Crawling... This may take minutes'):
-    urls = crawl_web_pages(start_url, url_pattern, max_depth)
-if urls is not None:
-  selected_urls = []
-  for i, url in enumerate(urls):
-    if st.checkbox(url, key=f"checkbox_{i}"):
-      selected_urls.append(url)
-  txt_data = "\n".join(selected_urls)
-  st.download_button(
-    label="Download selected URLs",
-    data=txt_data,
-    file_name="urls.txt",
-    mime="text/plain",
-  )
-  
+  try:
+    with st.spinner('Crawling... This may take minutes'):
+      urls = crawl_web_pages(start_url, url_pattern, max_depth)
+    if urls is not None:
+      selected_urls = []
+      for i, url in enumerate(urls):
+        if st.checkbox(url, key=f"checkbox_{i}"):
+          selected_urls.append(url)
+      txt_data = "\n".join(selected_urls)
+      st.download_button(
+        label="Download selected URLs",
+        data=txt_data,
+        file_name="urls.txt",
+        mime="text/plain",
+      )
+  except Exception as e:
+    st.error(f"エラーが発生しました: {e}")
