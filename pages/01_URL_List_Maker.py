@@ -91,12 +91,9 @@ if 'selected_urls' not in st.session_state:
 with st.form('download'):
     if st.session_state.urls:  # URLが存在する場合
         for i, url in enumerate(st.session_state.urls):
-            # チェックボックスにユニークなキーを割り当てる
             selected = st.checkbox(url, key=f"checkbox_{i}")
             st.session_state.selected_urls[i] = selected
-            st.write(st.session_state.selected_urls)
     submit_download = st.form_submit_button('Download')
     if submit_download:
-        st.write(st.session_state.selected_urls)
         selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
         download_urls(selected_urls)
