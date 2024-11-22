@@ -72,10 +72,6 @@ URLのページに記載されているリンクを辿ってURLのリストを�
 """)
 st.markdown('---')
 
-# Streamlitの入力フォーム
-
-
-
 
 selected_urls = []
 with st.form('crawl'):
@@ -88,6 +84,9 @@ with st.form('crawl'):
         st.session_state.urls = urls
 
 with st.form('download'):
+    if st.session_state.urls is None:
+      st.write("Crawl first")
+
     for url in st.session_state.urls:
         selected_urls.append(st.checkbox(url))
     submit_download = st.form_submit_button('test')
