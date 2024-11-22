@@ -21,10 +21,9 @@ def crawl_web_pages(url, pattern, max_depth=2):
 
         try:
             response = requests.get(url, timeout=10)
-            response.raise_for_status()  # エラーが発生した場合、例外を発生させる
-            time.sleep(3)  # サーバーへの負荷を軽減するため、少し待機
+            response.raise_for_status() 
+            time.sleep(3) 
 
-            # レスポンスがHTMLドキュメントであることを確認
             content_type = response.headers.get('content-type')
             if content_type is None or 'text/html' not in content_type.lower():
                 return
@@ -50,15 +49,30 @@ def crawl_web_pages(url, pattern, max_depth=2):
     crawl(url, 1)
     return urls
 
+def get_title_from_url(url):
+  """
+  Fetches the title of a web page given its URL.
+
+  Args:
+    url: The URL of the web page.
+
+  Returns:
+    The title of the web page (str).
+  """
+  try:
+    response = requests.get(url)
+    response.raise_for_status()  # Raise an exception for error status codes
+    soup = BeautifulSoup(response.content, "html.parser")
+    title = soup.find("title").text
+    return title
+  except requests.exceptions.RequestException as e:
+    print(f"Failed to fetch the page: {e}")
+    return None
+  except Exception as e:
+    print(f"Failed to extract the title: {e}")
+    return None
 
 def download_urls(selected_urls):
-    """
-    Download selected URLs as a text file.
-
-    Args:
-        selected_urls: List of selected URLs.
-    """
-
     if not selected_urls:
         st.error("No URLs selected for download.")
         return
@@ -69,9 +83,9 @@ def download_urls(selected_urls):
     # Download button within a form (assuming it's called after submit)
     try:
         st.download_button(
-            label="選択したURLをダウンロード",
+            label="Download Selected URL(s)",
             data=data.encode('utf-8'),
-            file_name="selected_urls.txt",
+            file_name="urls.txt",
             mime="text/plain"
         )
     except Exception as e:
@@ -87,6 +101,7 @@ URLのページに記載されているリンクを辿ってURLのリストを�
 深度は、リンク先のリンクの深さを示します。リンク先のリンク先のリンクまで収集する場合は3。
 """)
 st.markdown('---')
+
 if 'urls' not in st.session_state:
     st.session_state.urls = []
 if 'selected_urls' not in st.session_state:
@@ -106,7 +121,9 @@ with st.form('crawl'):
 
 if st.session_state.urls:
     for i, url in enumerate(st.session_state.urls):
-        selected = st.checkbox(url, key=f"checkbox_{i}")
+        title = get_title_from_url(url)
+        st.write(title)
+        selected = st.checkbox(url, key=f"checkbox_{i}", value=True)
         st.session_state.selected_urls[i] = selected
     selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
     download_urls(selected_urls)
