@@ -116,6 +116,7 @@ selected_urls = []
 if "selected_urls" not in st.session_state:
     st.session_state.selected_urls = []
 
+<<<<<<< HEAD
 if st.button("Search"):
     # クロール処理
     with st.spinner('Crawling... This may take minutes'):
@@ -149,6 +150,22 @@ if st.button("Search"):
             st.write('URLが選択されていません。')
     else:
         st.write('一致するURLは見つかりませんでした。')
+=======
+  # 結果表示
+  st.subheader('results:')
+  if urls:
+    st.write(get_title_from_url(url))
+    selected_urls = [url for url in urls if st.checkbox(url, value=True)]
+    txt_data = "\n".join(selected_urls)
+    st.download_button(
+      label="Download txt file",
+      data=txt_data,
+      file_name="urls.txt",
+      mime="text/plain",
+      )
+  else:
+    st.write('一致するURLは見つかりませんでした。')
+>>>>>>> 29bf59f (1)
 
 
 
