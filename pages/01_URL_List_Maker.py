@@ -116,7 +116,18 @@ URLのページに記載されているリンクを辿ってURLのリストを�
 深度は、リンク先のリンクの深さを示します。リンク先のリンク先のリンクまで収集する場合は3。
 """)
 st.markdown('---')
-
+st.markdown(
+    """
+    <style>
+        div[data-testid="stMultiSelect"] > div {
+            width: 100%;  /* multiselectコンテナの幅を100%にする */
+        }
+        div[data-testid="stMultiSelect"] > div > div > div {
+            width: 100%; /*内部のdivの幅も100%に調整*/
+        }
+    </style>""",
+    unsafe_allow_html=True,
+)
 # Streamlitの入力フォーム
 start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/')
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
