@@ -125,6 +125,6 @@ if st.session_state.urls:
         st.write(title)
         selected = st.checkbox(url, key=f"checkbox_{i}", value=True)
         st.session_state.selected_urls[i] = selected
-        st.write('')
+        st.write(' ')
     selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
     download_urls(selected_urls)
