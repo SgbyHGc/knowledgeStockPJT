@@ -90,7 +90,8 @@ st.markdown('---')
 if 'urls' not in st.session_state:
     st.session_state.urls = []
 if 'selected_urls' not in st.session_state:
-    st.session_state.selected_urls = []
+    # Assuming the same length as URLs
+    st.session_state.selected_urls = [False] * len(st.session_state.urls)  # Initialize with False (unchecked)
 
 with st.form('crawl'):
     start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/search/')
