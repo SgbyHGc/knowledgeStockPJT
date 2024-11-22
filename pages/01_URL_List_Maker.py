@@ -101,13 +101,8 @@ start_url = st.text_input('URLを入力してください', value='https://www.t
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
-
-if 'result' not in st.session_state:
-    st.session_state.result = None
-
 if st.button("Search"):
-    st.session_state.result = crawl_web_pages(start_url, url_pattern, max_depth)
-    st.write("関数1の結果:", st.session_state.result)
+    urls = crawl_web_pages(start_url, url_pattern, max_depth)
 if st.button("Download"):
-    download_urls(st.session_state.result)
+    download_urls(urls)
 
