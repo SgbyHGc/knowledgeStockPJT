@@ -123,7 +123,7 @@ with st.form('crawl'):
 if st.session_state.urls:
     for i, url in enumerate(st.session_state.urls):
         title = get_title_from_url(url)
-        st.text(title)
+        st.write(title)
         selected = st.checkbox(url, key=f"checkbox_{i}", value=True)
         st.session_state.selected_urls[i] = selected
         st.markdown('---')
