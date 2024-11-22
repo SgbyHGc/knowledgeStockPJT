@@ -52,7 +52,8 @@ def crawl_web_pages(url, pattern, max_depth=2):
 
 
 def download_urls(selected_urls):
-    data = "\n".join(selected_urls).encode('utf-8')
+    st.write(selected_urls)
+    # data = "\n".join(selected_urls).encode('utf-8')
     filename = "selected_urls.txt"
     st.download_button(
         label="選択したURLをダウンロード",
