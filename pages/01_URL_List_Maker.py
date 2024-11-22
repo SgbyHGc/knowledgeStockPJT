@@ -80,7 +80,7 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 
 
 urls = crawl_web_pages(start_url, url_pattern, max_depth)
-urls = ["aaa","bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"]
+# urls = ["aaa","bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"]
 selected_urls = []
 with st.form('my form'):
     for url in urls:
