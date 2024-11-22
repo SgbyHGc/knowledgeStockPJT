@@ -88,25 +88,26 @@ URLのページに記載されているリンクを辿ってURLのリストを�
 """)
 st.markdown('---')
 
+# セッション状態の初期化
+if 'urls' not in st.session_state:
+    st.session_state.urls = []
+if 'selected_urls' not in st.session_state:
+    st.session_state.selected_urls = []
+
+# クローリングフォーム
 with st.form('crawl'):
-    start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/search/')
-    url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
-    max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
-    submit_crawl = st.form_submit_button('Crawl')
+    # ... (既存のフォームのコード)
     if submit_crawl:
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
         st.session_state.urls = urls
 
-# セッション状態の初期化
-if 'selected_urls' not in st.session_state:
-    st.session_state.selected_urls = [False] * len(st.session_state.urls)  # 初期値をFalseで初期化
+# チェックボックスとダウンロードボタン
+if st.session_state.urls:
+    for i, url in enumerate(st.session_state.urls):
+        selected = st.checkbox(url, key=f"checkbox_{i}")
+        st.session_state.selected_urls[i] = selected
 
-with st.form('download'):
-    if st.session_state.urls:  # URLが存在する場合
-        for i, url in enumerate(st.session_state.urls):
-            selected = st.checkbox(url, key=f"checkbox_{i}")
-            st.session_state.selected_urls[i] = selected
-    submit_download = st.form_submit_button('Download')
-    if submit_download:
+    # ダウンロードボタンをフォームの外に配置
+    if st.button('Download Selected URLs'):
         selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
         download_urls(selected_urls)
