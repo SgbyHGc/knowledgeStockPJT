@@ -140,6 +140,7 @@ if st.button("Search"):
                     selected_urls.append(url)
 
             submitted = st.form_submit_button("選択したURLをダウンロード")
+            st.write(selected_urls)
             if submitted:
                 st.session_state.checked_urls = set(selected_urls)
                 download_selected_urls(selected_urls)
