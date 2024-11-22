@@ -100,26 +100,18 @@ start_url = st.text_input('URLを入力してください', value='https://www.t
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
 
-if "url_states" not in st.session_state:
-    st.session_state.url_states = {}
-
 if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
     if urls:
-        selected_urls = []
-        for url in urls:
-            key = f"checkbox_{hashlib.sha256(url.encode()).hexdigest()}"
-            is_selected = st.checkbox(url, key=key)
-            if is_selected:
-                selected_urls.append(url)
+        if "selected_urls" not in st.session_state:  # selected_urlsを初期化
+            st.session_state.selected_urls = []
+
+        selected_urls = st.multiselect("URLを選択", urls, key="selected_urls") # multiselectを使用
+
 
         if st.button("選択したURLをダウンロード", use_container_width=True):
             if selected_urls:
                 download_urls(selected_urls)
             else:
                 st.warning("URLが選択されていません。")
-    elif not urls and start_url and url_pattern:
-        st.warning("条件に一致するURLが見つかりませんでした。")
-    elif not start_url or not url_pattern:
-        st.warning("URLとキーワードを入力してください")
