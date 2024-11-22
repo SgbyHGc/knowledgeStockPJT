@@ -144,7 +144,5 @@ if st.button("Search"):
 
             submitted = st.form_submit_button("選択したURLをダウンロード")
             if submitted:
-                st.write(f"DEBUG: st.session_state.checked_urls before update: {st.session_state.checked_urls}") # 更新前の状態
+                st.write("Form submitted!") 
                 st.session_state.checked_urls = set(selected_urls)
-                st.write(f"DEBUG: st.session_state.checked_urls after update: {st.session_state.checked_urls}") # 更新後の状態
-                download_selected_urls(selected_urls)
