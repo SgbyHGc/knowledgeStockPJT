@@ -122,11 +122,7 @@ if st.button("Search"):
   # 結果表示
   st.subheader('results:')
   if urls:
-    for url in urls:
-      checked_urls[url] = st.checkbox(url)
-    for url, checked in checked_urls.items():
-        if checked:
-            selected_urls.append(url)
+    selected_urls = [url for url in urls if st.checkbox(url, value=True)]
     for url in selected_urls:
       title = get_title_from_url(url)
       st.write(url)
