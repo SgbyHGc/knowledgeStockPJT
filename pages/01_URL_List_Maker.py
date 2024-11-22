@@ -127,16 +127,16 @@ if st.button("Search"):
       for url, checked in checked_urls.items():
           if checked:
               selected_urls.append(url)
-    for url in selected_urls:
-      title = get_title_from_url(url)
-      st.write(url)
-    txt_data = "\n".join(selected_urls)
-    st.download_button(
-      label="Download txt file",
-      data=txt_data,
-      file_name="urls.txt",
-      mime="text/plain",
-      )
+      for url in selected_urls:
+        title = get_title_from_url(url)
+        st.write(url)
+      txt_data = "\n".join(selected_urls)
+      st.download_button(
+        label="Download txt file",
+        data=txt_data,
+        file_name="urls.txt",
+        mime="text/plain",
+        )
   else:
     st.write('一致するURLは見つかりませんでした。')
 
