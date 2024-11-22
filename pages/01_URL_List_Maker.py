@@ -85,6 +85,7 @@ if st.button("Search"):
         with st.form('my form'):
             for url in urls:
                 selected_urls.append(st.checkbox(url))
-        if st.form_submit_button('test'):
+            submit = st.form_submit_button('test')
+        if submit:
             st.write(selected_urls)
 
