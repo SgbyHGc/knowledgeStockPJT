@@ -132,12 +132,15 @@ if st.button("Search"):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
     if urls:
-        selected_urls = []
-        for i, url in enumerate(urls):
-            checked = st.checkbox(url, key=f"checkbox_{i}", value=(url in st.session_state.checked_urls))
-            if checked:
-                selected_urls.append(url)
+        with st.form("url_form"):
+            selected_urls = []
+            for i, url in enumerate(urls):
+                checked = st.checkbox(url, key=f"checkbox_{i}", value=(url in st.session_state.checked_urls))
+                if checked:
+                    selected_urls.append(url)
 
-        if selected_urls:  # selected_urlsが空でない場合のみダウンロードボタンを表示
-           download_selected_urls(selected_urls)
-           st.session_state.checked_urls = set(selected_urls)
+            submitted = st.form_submit_button("選択したURLをダウンロード")
+            if submitted:
+                st.session_state.checked_urls = set(selected_urls)  # セッション状態を更新
+                download_selected_urls(selected_urls)
+                st.experimental_rerun() # フォーム送信後に再実行
