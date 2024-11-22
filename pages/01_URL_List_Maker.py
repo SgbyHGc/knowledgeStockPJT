@@ -150,4 +150,4 @@ if st.button("Search"):
                 selected_urls.append(url)
 
         if st.button("選択したURLをダウンロード", use_container_width=True):
-            download_selected_urls(selected_urls)
+            download_urls(selected_urls)
