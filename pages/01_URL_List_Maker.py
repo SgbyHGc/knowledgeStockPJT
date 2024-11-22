@@ -114,7 +114,7 @@ if st.button("Search"):
         st.write("前回の計算結果:", st.session_state.result)
     st.session_state.result = crawl_web_pages(start_url, url_pattern, max_depth)
     st.write("関数1の結果:", st.session_state.result)
-if urls:
+if st.button("Download"):
     if st.session_state.result is None:
         st.write("関数1の結果がまだありません。")
     else:
