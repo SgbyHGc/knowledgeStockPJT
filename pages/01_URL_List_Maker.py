@@ -83,11 +83,16 @@ with st.form('crawl'):
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
         st.session_state.urls = urls
 
+# セッション状態の初期化
+if 'selected_urls' not in st.session_state:
+    st.session_state.selected_urls = [False] * len(st.session_state.urls)  # 初期値をFalseで初期化
+
 with st.form('download'):
     if st.session_state.urls:
         for i, url in enumerate(st.session_state.urls):
-            selected = st.checkbox(url, key=f"checkbox_{i}")  # チェックボックスにユニークなキーを設定
+            selected = st.checkbox(url, key=f"checkbox_{i}")
             st.session_state.selected_urls[i] = selected  # チェックボックスの状態を更新
+
     submit_download = st.form_submit_button('Download')
     if submit_download:
         selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
