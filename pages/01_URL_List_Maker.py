@@ -89,11 +89,14 @@ if 'selected_urls' not in st.session_state:
 
 with st.form('download'):
     if st.session_state.urls:
+        # Option 1: Handle potential length mismatch
+        selected_urls = []
         for i, url in enumerate(st.session_state.urls):
-            selected = st.checkbox(url, key=f"checkbox_{i}")
-            st.session_state.selected_urls[i] = selected  # チェックボックスの状態を更新
+            if i < len(st.session_state.selected_urls):
+                selected_urls.append(url if st.session_state.selected_urls[i] else None)
+            else:
+                selected_urls.append(url)
+        # Option 2: Assuming selected_urls has the same length (modify if needed)
+        # selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
 
-    submit_download = st.form_submit_button('Download')
-    if submit_download:
-        selected_urls = [url for i, url in enumerate(st.session_state.urls) if st.session_state.selected_urls[i]]
         st.write("選択されたURL:", selected_urls)
