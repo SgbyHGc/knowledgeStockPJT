@@ -119,13 +119,11 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 # 検索ボタン
 
 if "visibility" not in st.session_state:
-  with st.spinner('Crawling... This may take minutes'):
-    urls = crawl_web_pages(start_url, url_pattern, max_depth)
-    st.session_state.visibility = False
-
+  st.session_state.visibility = False
 
 if st.button("Search"): 
-
+  with st.spinner('Crawling... This may take minutes'):
+    urls = crawl_web_pages(start_url, url_pattern, max_depth)
   st.session_state.visibility = True
 
 if st.session_state.visibility:
