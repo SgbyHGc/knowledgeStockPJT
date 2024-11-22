@@ -124,7 +124,6 @@ if st.button("Search"):
   # 結果表示
   st.subheader('results:')
   if urls:
-
     for url in urls:
       title = get_title_from_url(url)
       st.write(title)
