@@ -110,8 +110,6 @@ if 'result' not in st.session_state:
     st.session_state.result = None
 
 if st.button("Search"):
-    if st.session_state.result is not None:
-        st.write("前回の計算結果:", st.session_state.result)
     st.session_state.result = crawl_web_pages(start_url, url_pattern, max_depth)
     st.write("関数1の結果:", st.session_state.result)
 if st.button("Download"):
