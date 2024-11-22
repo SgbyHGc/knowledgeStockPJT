@@ -119,7 +119,6 @@ if st.button("Search"):
     with st.spinner('Crawling... This may take minutes'):
         urls = crawl_web_pages(start_url, url_pattern, max_depth)
 
-    # 結果表示
 st.subheader('results:')
 if urls:
   selected_urls = st.multiselect('ダウンロードするURLを選択してください', urls)
