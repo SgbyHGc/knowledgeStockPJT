@@ -118,8 +118,7 @@ max_depth = st.number_input('最大深度を入力してください', min_value
 
 
 if st.button("Search"): 
-  with st.spinner('Crawling... This may take minutes'):
-    urls = crawl_web_pages(start_url, url_pattern, max_depth)
+  urls = crawl_web_pages(start_url, url_pattern, max_depth)
   if urls:
     selected_urls = []
     for url in urls:
