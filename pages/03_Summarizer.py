@@ -153,7 +153,7 @@ if st.button("Summarize"):
 if st.session_state.summary:
   for summ in st.session_state.summary:
     st.markdown('---')
-    st.text(summary)
+    st.text(summ)
   data = "\n".join(st.session_state.summary)
   st.download_button(
     label="Download txt file",
