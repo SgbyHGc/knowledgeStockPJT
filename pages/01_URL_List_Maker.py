@@ -116,10 +116,6 @@ if st.button('Crawl'):
     st.session_state.selected_urls = [False] * len(urls)
 st.markdown('---')
 
-
-
-
-
 if st.session_state.urls:
     for i, url in enumerate(st.session_state.urls):
         title = get_title_from_url(url)
