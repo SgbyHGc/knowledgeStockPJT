@@ -55,7 +55,7 @@ if st.button("Search"):
         if results:
             for class_name, text in results:
                 st.markdown('---')
-                st.markdown(f"### class: {class_name}")
+                st.markdown(f"#### {class_name}")
                 st.write(f"text: {text}...\n")
                 
         else:
