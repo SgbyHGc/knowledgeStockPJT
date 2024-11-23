@@ -112,7 +112,7 @@ if 'urls' not in st.session_state:
 if 'selected_urls' not in st.session_state:
     st.session_state.selected_urls = []
 
-if st.button('crawl'):
+if st.button('Crawl'):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
     st.session_state.urls = urls
     st.session_state.selected_urls = [False] * len(urls)
