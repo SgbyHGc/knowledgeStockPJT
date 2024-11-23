@@ -136,7 +136,7 @@ api_key = st.text_input("GeminiのAPI Keyを入力してください")
 
 # 検索ボタン
 if st.button("Summarize"):
-    with st.spinner("Making Summaries..."):
+    with st.spinner("Generating Summaries..."):
         if uploaded_file is not None and class_name and api_key:
             urls = url_list_from_txt(uploaded_file)
             for url in urls:
