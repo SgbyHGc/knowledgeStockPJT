@@ -21,7 +21,6 @@ def crawl_web_pages(url, pattern, max_depth=2):
             response = requests.get(url, timeout=10)
             response.raise_for_status() 
             time.sleep(3) 
-
             content_type = response.headers.get('content-type')
             if content_type is None or 'text/html' not in content_type.lower():
                 return
