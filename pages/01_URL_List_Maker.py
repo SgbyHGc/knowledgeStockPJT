@@ -92,6 +92,10 @@ def download_urls(selected_urls):
     except Exception as e:
         st.error(f"ダウンロード中にエラーが発生しました: {e}")
 
+if 'urls' not in st.session_state:
+    st.session_state.urls = []
+if 'selected_urls' not in st.session_state:
+    st.session_state.selected_urls = []
 
 # Streamlitアプリのタイトルを設定
 st.title("URLリストの作成 📝")
@@ -105,17 +109,15 @@ st.markdown('---')
 start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/')
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
-st.markdown('---')
-
-if 'urls' not in st.session_state:
-    st.session_state.urls = []
-if 'selected_urls' not in st.session_state:
-    st.session_state.selected_urls = []
 
 if st.button('Crawl'):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
     st.session_state.urls = urls
     st.session_state.selected_urls = [False] * len(urls)
+st.markdown('---')
+
+
+
 
 
 if st.session_state.urls:
