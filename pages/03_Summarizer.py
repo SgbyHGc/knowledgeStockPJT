@@ -149,7 +149,6 @@ if st.button("Summarize"):
     else:
         st.warning("フォームを全て入力してください")
 
-
 if st.session_state.summary:
     for summ in st.session_state.summary:
         st.markdown('---')
@@ -161,5 +160,4 @@ if st.session_state.summary:
         file_name="summary.txt",
         mime="text/plain",
         )
-
 st.markdown('---')
