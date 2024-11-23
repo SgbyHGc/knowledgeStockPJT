@@ -131,7 +131,7 @@ if 'summary' not in st.session_state:
 
 # URLとキーワードの入力
 uploaded_file = st.file_uploader("txtファイルを選択してください", type='txt')
-class_name = st.text_input("URLのページに共通する、抽出したい部分のclass nameを指定してください", value='page-content--detail')
+class_name = st.text_input("URLのページに共通する、抽出したい部分のClass Nameを指定してください", value='page-content--detail')
 api_key = st.text_input("GeminiのAPI Keyを入力してください")
 
 # 検索ボタン
