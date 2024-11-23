@@ -141,23 +141,25 @@ if st.button("Summarize"):
     for url in urls:
       extracted_text = get_text_by_class(url, class_name)
       if extracted_text is not None:
-        st.markdown('---')
         title = get_title_from_url(url)
         summary = gemini(extracted_text, api_key)
         summary = add_info(summary, title, url)
-        st.text(summary)
         st.session_state.summary = summary
       continue
   else:
     st.warning("フォームを全て入力してください")
 
-st.markdown('---')
 
 if st.session_state.summary:
-    data = "\n".join(st.session_state.summary)
-    st.download_button(
-      label="Download txt file",
-      data=data,
-      file_name="summary.txt",
-      mime="text/plain",
-      )
+  for summ in st.session_state.summary:
+    st.markdown('---')
+    st.text(summary)
+  data = "\n".join(st.session_state.summary)
+  st.download_button(
+    label="Download txt file",
+    data=data,
+    file_name="summary.txt",
+    mime="text/plain",
+    )
+
+st.markdown('---')
