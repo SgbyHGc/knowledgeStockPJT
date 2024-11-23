@@ -53,7 +53,7 @@ if st.button("Search"):
             for class_name, text in results:
                 st.markdown('---')
                 st.markdown(f"#### {class_name}")
-                st.write(f"t{text}...\n")
+                st.write(f"{text}...\n")
         else:
             st.warning("キーワードが見つかりませんでした")
     else:
