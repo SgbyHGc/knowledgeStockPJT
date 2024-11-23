@@ -11,15 +11,12 @@ import io
 def crawl_web_pages(url, pattern, max_depth=2):
     visited_urls = set()
     urls = []
-
     def crawl(url, depth):
         if depth > max_depth:
             return
-
         if url in visited_urls:
             return
         visited_urls.add(url)
-
         try:
             response = requests.get(url, timeout=10)
             response.raise_for_status() 
@@ -28,25 +25,19 @@ def crawl_web_pages(url, pattern, max_depth=2):
             content_type = response.headers.get('content-type')
             if content_type is None or 'text/html' not in content_type.lower():
                 return
-
         except requests.exceptions.RequestException as e:
             st.error(f"{url} の取得中にエラーが発生しました: {e}")
             return
-
         soup = BeautifulSoup(response.content, "html.parser")
-
         # 現在のURLがパターンに一致するか確認
         if pattern in urlparse(url).path:
             urls.append(url)
-
         for link in soup.find_all("a", href=True):
             absolute_url = urljoin(url, link["href"])
-
             # リンクがウェブページ（画像、PDFなどではない）につながることを確認
             parsed_link = urlparse(absolute_url)
             if not parsed_link.path.endswith(('.jpg', '.jpeg', '.png', '.gif', '.pdf', '.zip', '.rar')):
                 crawl(absolute_url, depth + 1)
-
     crawl(url, 1)
     return urls
 
@@ -103,17 +94,18 @@ st.markdown('---')
 st.markdown("""
 URLのページに記載されているリンクを辿ってURLのリストを作成します。\n
 指定したキーワードが含まれるURLのみをリスト化します。サブディレクトリなどを指定してください。
-深度は、リンク先のリンクの深さを示します。リンク先のリンク先のリンクまで収集する場合は3。
+深度は、リンク先のリンクの深さを示します。リンク先のリンク先のリンクまで収集する場合は3に設定してください。
 """)
 st.markdown('---')
 start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/')
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
-max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
+max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=4, value=2)
 
 if st.button('Crawl'):
     urls = crawl_web_pages(start_url, url_pattern, max_depth)
     st.session_state.urls = urls
     st.session_state.selected_urls = [False] * len(urls)
+
 st.markdown('---')
 
 if st.session_state.urls:
