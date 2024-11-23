@@ -54,9 +54,10 @@ if st.button("Search"):
         results = search_keyword_in_div(url, keyword)
         if results:
             for class_name, text in results:
+                st.markdown('---')
                 st.write(f"class: {class_name}")
                 st.write(f"text: {text}...\n")
-                st.markdown('---')
+                
         else:
             st.warning("キーワードが見つかりませんでした。")
     else:
