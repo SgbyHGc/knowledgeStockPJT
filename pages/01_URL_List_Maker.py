@@ -68,10 +68,8 @@ def download_urls(selected_urls):
     if not selected_urls:
         st.error("No URLs selected for download.")
         return
-
     # Join URLs with newlines
     data = "\n".join(selected_urls)
-
     # Download button within a form (assuming it's called after submit)
     try:
         st.download_button(
@@ -82,6 +80,7 @@ def download_urls(selected_urls):
         )
     except Exception as e:
         st.error(f"ダウンロード中にエラーが発生しました: {e}")
+
 
 if 'urls' not in st.session_state:
     st.session_state.urls = []
@@ -102,9 +101,12 @@ url_pattern = st.text_input('キーワードを入力してください', value=
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=4, value=2)
 
 if st.button('Crawl'):
-    urls = crawl_web_pages(start_url, url_pattern, max_depth)
-    st.session_state.urls = urls
-    st.session_state.selected_urls = [False] * len(urls)
+    if start_url:
+        urls = crawl_web_pages(start_url, url_pattern, max_depth)
+        st.session_state.urls = urls
+        st.session_state.selected_urls = [False] * len(urls)
+    else:
+        st.warning('URLを入力してください')
 
 st.markdown('---')
 
