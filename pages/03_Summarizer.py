@@ -136,18 +136,19 @@ api_key = st.text_input("GeminiのAPI Keyを入力してください")
 
 # 検索ボタン
 if st.button("Summarize"):
-    if uploaded_file is not None and class_name and api_key:
-        urls = url_list_from_txt(uploaded_file)
-        for url in urls:
-          extracted_text = get_text_by_class(url, class_name)
-          if extracted_text is not None:
-              title = get_title_from_url(url)
-              summary = gemini(extracted_text, api_key)
-              summary = add_info(summary, title, url)
-              st.session_state.summary.append(summary)
-          continue
-    else:
-        st.warning("フォームを全て入力してください")
+    with st.spinner("Making Summaries..."):
+        if uploaded_file is not None and class_name and api_key:
+            urls = url_list_from_txt(uploaded_file)
+            for url in urls:
+              extracted_text = get_text_by_class(url, class_name)
+              if extracted_text is not None:
+                  title = get_title_from_url(url)
+                  summary = gemini(extracted_text, api_key)
+                  summary = add_info(summary, title, url)
+                  st.session_state.summary.append(summary)
+              continue
+        else:
+            st.warning("フォームを全て入力してください")
 
 if st.session_state.summary:
     for summ in st.session_state.summary:
