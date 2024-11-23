@@ -17,7 +17,6 @@ def search_keyword_in_div(url, keyword):
     response = requests.get(url)
     response.raise_for_status()
     soup = BeautifulSoup(response.content, "html.parser")
-
     div_tags = soup.find_all("div")
     for div_tag in div_tags:
       text = div_tag.get_text(strip=True)  # Get the text content of the div tag and strip whitespace
@@ -28,14 +27,11 @@ def search_keyword_in_div(url, keyword):
         else:
           class_name = "None"  # If no class attribute is found, display "None"
         results.append((class_name, text[:100]))
-
   except requests.exceptions.RequestException as e:
     st.write(f"Error fetching URL: {e}")
   except Exception as e:
     st.write(f"An error occurred: {e}")
-
   return results
-
 
 # Streamlitアプリのタイトルを設定
 st.title("Class Nameを見つける 🔎")
@@ -44,6 +40,7 @@ st.markdown("""
 URLのページをキーワード検索し、該当箇所のdivタグのClass Nameを表示します。
 """)
 st.markdown('---')
+
 # URLとキーワードの入力
 url = st.text_input("URLを入力してください", value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/automation/advances-in-broad-match')
 keyword = st.text_input("キーワードを入力してください", value='AI の基盤となる技術の飛躍的な進化に伴い')
@@ -57,9 +54,8 @@ if st.button("Search"):
                 st.markdown('---')
                 st.markdown(f"#### {class_name}")
                 st.write(f"t{text}...\n")
-                
         else:
-            st.warning("キーワードが見つかりませんでした。")
+            st.warning("キーワードが見つかりませんでした")
     else:
-        st.warning("URLとキーワードを入力してください。")
+        st.warning("URLとキーワードを入力してください")
 st.markdown('---')
