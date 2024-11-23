@@ -150,12 +150,11 @@ if st.button("Summarize"):
         else:
             st.warning("フォームを全て入力してください")
 
-st.markdown('---')
-
 if st.session_state.summary:
     for summ in st.session_state.summary:
         st.markdown('---')
         st.text(summ)
+    st.markdown('---')
     data = "\n".join(st.session_state.summary)
     st.download_button(
         label="Download txt file",
