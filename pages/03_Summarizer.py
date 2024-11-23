@@ -144,7 +144,7 @@ if st.button("Summarize"):
         title = get_title_from_url(url)
         summary = gemini(extracted_text, api_key)
         summary = add_info(summary, title, url)
-        st.session_state.summary = summary
+        st.session_state.summary.append(summary)
       continue
   else:
     st.warning("フォームを全て入力してください")
