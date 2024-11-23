@@ -100,12 +100,13 @@ url_pattern = st.text_input('キーワードを入力してください', value=
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=4, value=2)
 
 if st.button('Crawl'):
-    if start_url:
-        urls = crawl_web_pages(start_url, url_pattern, max_depth)
-        st.session_state.urls = urls
-        st.session_state.selected_urls = [False] * len(urls)
-    else:
-        st.warning('URLを入力してください')
+    with st.spinner("Gathering URLs..."):
+        if start_url:
+            urls = crawl_web_pages(start_url, url_pattern, max_depth)
+            st.session_state.urls = urls
+            st.session_state.selected_urls = [False] * len(urls)
+        else:
+            st.warning('URLを入力してください')
 
 st.markdown('---')
 
