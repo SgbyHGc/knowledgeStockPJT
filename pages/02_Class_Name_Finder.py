@@ -51,15 +51,14 @@ keyword = st.text_input("キーワードを入力してください", value='AI 
 # 検索ボタン
 if st.button("Search"):
     if url and keyword:
-        # キーワード検索を実行
         results = search_keyword_in_div(url, keyword)
-
-        # 結果を表示
         if results:
             for class_name, text in results:
                 st.write(f"class: {class_name}")
                 st.write(f"text: {text}...\n")
+                st.markdown('---')
         else:
             st.warning("キーワードが見つかりませんでした。")
     else:
         st.warning("URLとキーワードを入力してください。")
+st.markdown('---')
