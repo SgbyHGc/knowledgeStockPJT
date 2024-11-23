@@ -126,11 +126,13 @@ URLのリスト(txtファイル)に順番にアクセスし、指定したClass 
 """)
 st.markdown('---')
 
+if 'summary' not in st.session_state:
+    st.session_state.summary = []
+
 # URLとキーワードの入力
 uploaded_file = st.file_uploader("txtファイルを選択してください", type='txt')
 class_name = st.text_input("URLのページに共通する、抽出したい部分のclass nameを指定してください", value='page-content--detail')
 api_key = st.text_input("GeminiのAPI Keyを入力してください")
-summarized_text = []
 
 # 検索ボタン
 if st.button("Summarize"):
@@ -143,16 +145,19 @@ if st.button("Summarize"):
         title = get_title_from_url(url)
         summary = gemini(extracted_text, api_key)
         summary = add_info(summary, title, url)
-        summarized_text.append(summary)
         st.text(summary)
+        st.session_state.summary = summary
       continue
-    data = "\n".join(summarized_text)
+  else:
+    st.warning("フォームを全て入力してください")
+    
+st.markdown('---')
+
+if st.session_state.summary:
+    data = "\n".join(st.session_state.summary)
     st.download_button(
       label="Download txt file",
       data=data,
       file_name="summary.txt",
       mime="text/plain",
       )
-  else:
-    st.warning("フォームを全て入力してください")
-st.markdown('---')
