@@ -108,6 +108,7 @@ if 'urls' not in st.session_state:
     st.session_state.urls = []
 if 'selected_urls' not in st.session_state:
     st.session_state.selected_urls = []
+    
 start_url = st.text_input('URLを入力してください', value='https://www.thinkwithgoogle.com/intl/ja-jp/marketing-strategies/')
 url_pattern = st.text_input('キーワードを入力してください', value='/marketing-strategies/')
 max_depth = st.number_input('最大深度を入力してください', min_value=1, max_value=3, value=2)
