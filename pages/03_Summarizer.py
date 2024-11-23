@@ -121,7 +121,7 @@ st.title("サマリーの出力 📚")
 st.markdown('---')
 st.markdown(
 """
-URLのリスト(txtファイル)に順番にアクセスし、指定したClass Nameの箇所を抜粋してGeminiで要約した結果をテキストファイルにまとめます。
+URLのリスト(txtファイル)に順番にアクセスし、指定したClass Nameの箇所を抜粋してGeminiで要約した結果をテキストファイルにまとめます。\n
 個々のURLは改行で区切られている必要があります。
 """)
 st.markdown('---')
@@ -150,7 +150,7 @@ if st.button("Summarize"):
       continue
   else:
     st.warning("フォームを全て入力してください")
-    
+
 st.markdown('---')
 
 if st.session_state.summary:

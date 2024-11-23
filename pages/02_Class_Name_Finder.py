@@ -4,14 +4,6 @@ import requests
 from bs4 import BeautifulSoup
 
 def search_keyword_in_div(url, keyword):
-  """
-  This function searches for a specific keyword in the text content of all div tags on a given URL.
-  It then prints the class name and the first 100 characters of the text content of the div tags that contain the keyword.
-
-  Args:
-    url: The URL of the webpage to search.
-    keyword: The keyword to search for.
-  """
   results = []
   try:
     response = requests.get(url)
