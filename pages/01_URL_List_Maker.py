@@ -11,7 +11,13 @@ import io
 def crawl_web_pages(url, pattern, max_depth=2):
     visited_urls = set()
     urls = []
+
+    progress_bar = st.progress(0)
+    progress_text = "Crawling..."
+    
     def crawl(url, depth):
+        nonlocal progress_bar, progress_text, visited_urls, urls
+        
         if depth > max_depth:
             return
         if url in visited_urls:
@@ -19,8 +25,8 @@ def crawl_web_pages(url, pattern, max_depth=2):
         visited_urls.add(url)
         try:
             response = requests.get(url, timeout=10)
-            response.raise_for_status() 
-            time.sleep(3) 
+            response.raise_for_status()
+            time.sleep(3)
             content_type = response.headers.get('content-type')
             if content_type is None or 'text/html' not in content_type.lower():
                 return
@@ -37,7 +43,13 @@ def crawl_web_pages(url, pattern, max_depth=2):
             parsed_link = urlparse(absolute_url)
             if not parsed_link.path.endswith(('.jpg', '.jpeg', '.png', '.gif', '.pdf', '.zip', '.rar')):
                 crawl(absolute_url, depth + 1)
+
+        progress = len(visited_urls) / (len(visited_urls) + 100)  if len(visited_urls) > 0 else 0
+        progress_text = f"Crawled {len(visited_urls)} Urls..."
+        progress_bar.progress(progress, text=progress_text)
+        
     crawl(url, 1)
+    progress_bar.empty()
     return urls
 
 def get_title_from_url(url):
